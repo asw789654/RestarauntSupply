@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  auth.api:
+    image: ${DOCKER_REGISTRY-}authapi
+    build:
+      context: .
+      dockerfile: Apis/Auth.Api/Dockerfile
+
+  orders.api:
+    image: ${DOCKER_REGISTRY-}ordersapi
+    build:
+      context: .
+      dockerfile: Apis/Orders.Api/Dockerfile
+
+
+  products.api:
+    image: ${DOCKER_REGISTRY-}productsapi
+    build:
+      context: .
+      dockerfile: Apis/Products.Api/Dockerfile
+
+
+  storages.api:
+    image: ${DOCKER_REGISTRY-}storagesapi
+    build:
+      context: .
+      dockerfile: Apis/Storages.Api/Dockerfile
+
+
+  users.api:
+    image: ${DOCKER_REGISTRY-}usersapi
+    build:
+      context: .
+      dockerfile: Apis/Users.Api/Dockerfile
+
