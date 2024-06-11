@@ -27,7 +27,8 @@ internal class DeleteProductCommandHandler : IRequestHandler<DeleteProductComman
 
     public async Task<Unit> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
-        var product = await _products.AsAsyncRead().SingleOrDefaultAsync(e => e.ProductId == request.ProductId, cancellationToken);
+        var productId = Guid.Parse(request.ProductId);
+        var product = await _products.AsAsyncRead().SingleOrDefaultAsync(e => e.ProductId == productId, cancellationToken);
         if (product is null)
         {
             throw new NotFoundException(request);

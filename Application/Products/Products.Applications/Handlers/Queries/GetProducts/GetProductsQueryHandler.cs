@@ -4,11 +4,8 @@ using Core.Application.BaseRealizations;
 using Core.Application.DTOs;
 using Core.Auth.Application.Abstractions.Service;
 using Core.Products.Domain;
-using Core.Users.Domain.Enums;
-using MediatR;
 using Products.Applications.Caches;
 using Products.Applications.DTOs;
-using Products.Applications.Handlers.Queries;
 
 namespace Products.Applications.Handlers.Queries.GetProducts;
 

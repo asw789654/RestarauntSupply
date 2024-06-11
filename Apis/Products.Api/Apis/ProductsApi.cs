@@ -9,6 +9,8 @@ using Products.Applications.Handlers.Commands.CreateProduct;
 using Products.Applications.Handlers.Commands.DeleteProduct;
 using Products.Applications.Handlers.Commands.SpendProduct;
 using Products.Applications.Handlers.Commands.UpdateProduct;
+using Products.Applications.Handlers.Commands.UpdateProductDelivered;
+using Products.Applications.Handlers.Queries.CheckProductsSpoilTime;
 using Products.Applications.Handlers.Queries.GetProduct;
 using Products.Applications.Handlers.Queries.GetProducts;
 using Products.Applications.Handlers.Queries.GetProductsCount;
@@ -44,6 +46,13 @@ public class ProductsApi : IApi
             .Produces<BaseListDto<GetProductDto>>()
             .RequireAuthorization();
 
+        app.MapGet($"{_apiUrl}/Spoiled", GetSpoiledProducts)
+            .WithTags(Tag)
+            .WithOpenApi()
+            .WithSummary("Get Spoiled Products")
+            .Produces<GetProductDto[]>()
+            .RequireAuthorization();
+
         app.MapGet(_apiUrl, GetProducts)
             .WithTags(Tag)
             .WithOpenApi()
@@ -57,6 +66,7 @@ public class ProductsApi : IApi
             .WithSummary("Get products count")
             .Produces<int>()
             .RequireAuthorization();
+
 
         #endregion
 
@@ -85,8 +95,15 @@ public class ProductsApi : IApi
         app.MapPut($"{_apiUrl}/ChangeVolume/{{id}}", ChangeVolumeProduct)
             .WithTags(Tag)
             .WithOpenApi()
-            .WithSummary("Delete product")
+            .WithSummary("ChangeVolume")
             .RequireAuthorization();
+
+        app.MapPut($"{_apiUrl}/isDelivered/{{id}}", ChangeIsDelivered)
+            .WithTags(Tag)
+            .WithOpenApi()
+            .WithSummary("Update isDelivered")
+            .RequireAuthorization()
+            .Produces<GetProductDto>();
         //ChangeVolumeProductCommand
         #endregion
     }
@@ -97,7 +114,7 @@ public class ProductsApi : IApi
     }
 
     [Authorize]
-    private static Task<GetProductDto> GetProduct([FromServices] IMediator mediator, [FromRoute] int id,
+    private static Task<GetProductDto> GetProduct([FromServices] IMediator mediator, [FromRoute] string id,
         CancellationToken cancellationToken)
     {
         return mediator.Send(new GetProductQuery()
@@ -111,6 +128,13 @@ public class ProductsApi : IApi
     {
         var result = await mediator.Send(query, cancellationToken);
         //httpContext.Response.Headers.Append("X-Total-Count", result.TotalCount.ToString());
+        return result.Items; 
+    }
+
+    private static async Task<GetProductDto[]> GetSpoiledProducts(HttpContext httpContext, [FromServices] IMediator mediator, [AsParameters] CheckProductsSpoilTimeQuery query,
+        CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(query, cancellationToken);
         return result.Items;
     }
 
@@ -121,7 +145,7 @@ public class ProductsApi : IApi
         return Results.Created($"{_apiUrl}/{{}}", result);
     }
 
-    private static Task<GetProductDto> PutProduct([FromServices] IMediator mediator, [FromRoute] int id, [FromBody] UpdateProductPayload payload,
+    private static Task<GetProductDto> PutProduct([FromServices] IMediator mediator, [FromRoute] string id, [FromBody] UpdateProductPayload payload,
         CancellationToken cancellationToken)
     {
         var command = new UpdateProductCommand()
@@ -135,11 +159,12 @@ public class ProductsApi : IApi
         return mediator.Send(command, cancellationToken);
     }
 
-    private static Task DeleteProduct([FromServices] IMediator mediator, [FromRoute] int id, CancellationToken cancellationToken)
+    private static Task DeleteProduct([FromServices] IMediator mediator, [FromRoute] string id, CancellationToken cancellationToken)
     {
         return mediator.Send(new DeleteProductCommand { ProductId = id }, cancellationToken);
     }
-    private static Task<GetProductDto> ChangeVolumeProduct([FromServices] IMediator mediator, [FromRoute] int id, [FromBody] SpendProductPayload payload,
+
+    private static Task<GetProductDto> ChangeVolumeProduct([FromServices] IMediator mediator, [FromRoute] string id, [FromBody] SpendProductPayload payload,
         CancellationToken cancellationToken)
     {
         var command = new SpendProductCommand()
@@ -149,4 +174,15 @@ public class ProductsApi : IApi
         };
         return mediator.Send(command, cancellationToken);
     }
+
+    private static Task<GetProductDto> ChangeIsDelivered([FromServices] IMediator mediator, [FromRoute] string id, CancellationToken cancellationToken)
+    {
+        var command = new UpdateProductDeliveredCommand()
+        {
+            ProductId = id           
+        };
+        return mediator.Send(command, cancellationToken);
+    }
+
+
 }

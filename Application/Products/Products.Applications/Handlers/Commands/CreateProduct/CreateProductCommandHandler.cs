@@ -32,8 +32,7 @@ internal class CreateProductCommandHandler : IRequestHandler<CreateProductComman
         {
             Name = request.Name,
             SpoilTime = request.SpoilTime,
-            Volume = request.Volume,
-            StorageTypeId = request.StorageTypeId,
+            Volume = request.Volume
         };
 
         product = await _products.AddAsync(product, cancellationToken);

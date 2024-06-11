@@ -1,4 +1,4 @@
-using Core.Storages.Domain;
+using Core.Products.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

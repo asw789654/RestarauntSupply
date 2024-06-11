@@ -1,7 +1,7 @@
 using AutoMapper;
 using Core.Application.Abstractions.Persistence.Repository.Writing;
 using Core.Auth.Application.Abstractions.Service;
-using Core.Storages.Domain;
+using Core.Products.Domain;
 using MediatR;
 using Storages.Application.Caches;
 using Storages.Application.DTOs;

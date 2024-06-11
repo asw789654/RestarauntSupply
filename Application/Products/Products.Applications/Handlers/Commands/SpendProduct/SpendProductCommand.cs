@@ -9,6 +9,6 @@ namespace Products.Applications.Handlers.Commands.SpendProduct;
 [RequestAuthorize]
 public class SpendProductCommand : IMapTo<Product>, IRequest<GetProductDto>
 {
-    public int ProductId { get; set; }
+    public string ProductId { get; set; } = default!;
     public int Volume { get; set; }
 }

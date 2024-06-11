@@ -1,3 +1,4 @@
+using Core.Application.ValidatorsExtensions;
 using FluentValidation;
 
 namespace Products.Applications.Handlers.Commands.UpdateProduct;
@@ -6,7 +7,7 @@ internal class UpdateProductCommandValidator : AbstractValidator<UpdateProductCo
 {
     public UpdateProductCommandValidator()
     {
-        RuleFor(e => e.ProductId).GreaterThan(0);
+        RuleFor(e => e.ProductId).NotEmpty().IsGuid();
         RuleFor(e => e.Name).NotEmpty().MaximumLength(200);
     }
 }

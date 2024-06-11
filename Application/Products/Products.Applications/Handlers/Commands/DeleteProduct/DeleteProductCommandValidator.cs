@@ -1,4 +1,5 @@
 using FluentValidation;
+using Core.Application.ValidatorsExtensions;
 
 namespace Products.Applications.Handlers.Commands.DeleteProduct;
 
@@ -6,6 +7,6 @@ internal class DeleteProductCommandValidator : AbstractValidator<DeleteProductCo
 {
     public DeleteProductCommandValidator()
     {
-        RuleFor(e => e.ProductId).GreaterThan(0);
+        RuleFor(e => e.ProductId).NotEmpty().IsGuid();
     }
 }

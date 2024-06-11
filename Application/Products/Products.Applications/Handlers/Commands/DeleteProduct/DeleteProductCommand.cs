@@ -6,5 +6,5 @@ namespace Products.Applications.Handlers.Commands.DeleteProduct;
 [RequestAuthorize]
 public class DeleteProductCommand : IRequest<Unit>
 {
-    public int ProductId { get; init; }
+    public string ProductId { get; init; } = default!;
 }

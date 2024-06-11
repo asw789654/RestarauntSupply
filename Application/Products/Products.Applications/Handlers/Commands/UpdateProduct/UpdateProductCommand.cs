@@ -9,7 +9,7 @@ namespace Products.Applications.Handlers.Commands.UpdateProduct;
 [RequestAuthorize]
 public class UpdateProductCommand : IMapTo<Product>, IRequest<GetProductDto>
 {
-    public int ProductId { get; set; }
+    public string ProductId { get; set; } = default!;
 
     public string Name { get; set; } = default!;
 

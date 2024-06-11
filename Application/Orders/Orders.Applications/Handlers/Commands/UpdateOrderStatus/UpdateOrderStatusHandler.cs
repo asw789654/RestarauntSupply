@@ -57,11 +57,11 @@ internal class UpdateOrderStatusCommandHandler : IRequestHandler<UpdateOrderStat
 
         if (order.OrderStatusId == 3)
         {
-
+            _mqService.SendMessage("addProductOnOrderCompleate", JsonSerializer.Serialize(request.OrderId));
         }
+
         order = await _orders.UpdateAsync(order, cancellationToken);
         _cleanOrdersCacheService.ClearAllCaches();
-        _mqService.SendMessage("addProductOnOrderCompleate", JsonSerializer.Serialize(order.Products));
         return _mapper.Map<GetOrderDto>(order);
     }
 }

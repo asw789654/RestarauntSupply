@@ -1,4 +1,4 @@
-using Core.Storages.Domain;
+using Core.Products.Domain;
 using System.Linq.Expressions;
 
 namespace Storages.Application.Handlers.Queries;

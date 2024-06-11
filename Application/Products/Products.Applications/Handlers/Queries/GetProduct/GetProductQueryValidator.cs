@@ -6,6 +6,6 @@ internal class GetProductQueryValidator : AbstractValidator<GetProductQuery>
 {
     public GetProductQueryValidator()
     {
-        RuleFor(e => e.ProductId).GreaterThan(0);
+        RuleFor(e => e.ProductId).NotEmpty();
     }
 }

@@ -9,5 +9,4 @@ public class GetOrderDto : IMapFrom<Order>
 
     public Guid UserId { get; set; }
 
-    public Order[] Orders { get; set; } = default!;
 }

@@ -17,15 +17,16 @@ public class MqService : IMqService
     }
     public void SendMessage(string queue, string message)
     {
-        var factory = new ConnectionFactory 
-        { 
+        var factory = new ConnectionFactory
+        {
             HostName = "localhost",
-            Port = 15672,
             UserName = "guest",
             Password = "guest"
         };
         using var connection = factory.CreateConnection();
         using var channel = connection.CreateModel();
+
+        channel.ExchangeDeclare(exchange: queue + "Exchange", type: ExchangeType.Fanout);
 
         var body = Encoding.UTF8.GetBytes(message);
 

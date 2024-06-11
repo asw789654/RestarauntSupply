@@ -8,5 +8,5 @@ namespace Orders.Applications.Handlers.Commands.CreateOrder;
 [RequestAuthorize]
 public class CreateOrderCommand : IRequest<GetOrderDto>
 {
-    public List<Product> Products { get; set; } = default!;
+    public List<CreateOrderCommandProductPayload> Products { get; set; } = default!;
 }

@@ -3,7 +3,7 @@ using Core.Application.Abstractions.Persistence.Repository.Read;
 using Core.Application.BaseRealizations;
 using Core.Application.DTOs;
 using Core.Auth.Application.Abstractions.Service;
-using Core.Storages.Domain;
+using Core.Products.Domain;
 using Storages.Application.Caches;
 using Storages.Application.DTOs;
 

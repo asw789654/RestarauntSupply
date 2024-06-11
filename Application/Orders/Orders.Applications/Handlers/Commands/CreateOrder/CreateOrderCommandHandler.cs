@@ -39,6 +39,7 @@ internal class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, G
 
     public async Task<GetOrderDto> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
+        
         var userId = _currentUserService.CurrentUserId;
 
         if (_currentUserService.CurrentUserId != userId &&
@@ -46,18 +47,31 @@ internal class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, G
         {
             throw new ForbiddenException();
         }
-        /*
-        var products = request.Products;
-
-        foreach (var product in request.Products)
-        {          
-            await _products.UpdateAsync(product, cancellationToken);
+        var products = new List<Product>();
+        foreach (var product in request.Products) 
+        { 
+            products.Add(new Product()
+            {
+                Name = product.Name,
+                Volume = product.Volume,
+                SpoilTime = product.SpoilTime
+            });
         }
-        */
+        var IndexedProducts = new List<Product>();
+        foreach (var product in products)
+        {
+            IndexedProducts.Add(new Product()
+            {
+                ProductId = Guid.NewGuid(),
+                Name = product.Name,
+                Volume = product.Volume,
+                SpoilTime = product.SpoilTime
+            });
+        }
         var order = new Order
         {
             UserId = userId,
-            Products = request.Products
+            Products = products
         };
 
         order = await _orders.AddAsync(order, cancellationToken);

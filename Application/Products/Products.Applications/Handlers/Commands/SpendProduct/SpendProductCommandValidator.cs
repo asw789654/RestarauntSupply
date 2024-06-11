@@ -1,3 +1,4 @@
+using Core.Application.ValidatorsExtensions;
 using FluentValidation;
 
 namespace Products.Applications.Handlers.Commands.SpendProduct;
@@ -6,7 +7,7 @@ internal class SpendProductCommandValidator : AbstractValidator<SpendProductComm
 {
     public SpendProductCommandValidator()
     {
-        RuleFor(e => e.ProductId).GreaterThan(0);
+        RuleFor(e => e.ProductId).NotEmpty().IsGuid();
         RuleFor(e => e.Volume).GreaterThan(0);
     }
 }

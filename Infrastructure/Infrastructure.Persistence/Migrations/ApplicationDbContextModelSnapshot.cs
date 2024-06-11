@@ -43,11 +43,12 @@ namespace Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Core.Products.Domain.Product", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<Guid>("ProductId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ProductId"));
+                    b.Property<bool>("IsDelivered")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -60,7 +61,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<DateTime?>("SpoilTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("StorageId")
+                    b.Property<int?>("StorageId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Volume")
@@ -75,7 +76,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Core.Storages.Domain.Storage", b =>
+            modelBuilder.Entity("Core.Products.Domain.Storage", b =>
                 {
                     b.Property<int>("StorageId")
                         .ValueGeneratedOnAdd()
@@ -237,16 +238,12 @@ namespace Infrastructure.Persistence.Migrations
                         .WithMany("Products")
                         .HasForeignKey("OrderId");
 
-                    b.HasOne("Core.Storages.Domain.Storage", "Storage")
-                        .WithMany()
-                        .HasForeignKey("StorageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Storage");
+                    b.HasOne("Core.Products.Domain.Storage", null)
+                        .WithMany("Products")
+                        .HasForeignKey("StorageId");
                 });
 
-            modelBuilder.Entity("Core.Storages.Domain.Storage", b =>
+            modelBuilder.Entity("Core.Products.Domain.Storage", b =>
                 {
                     b.HasOne("Core.Storages.Domain.StorageType", "StorageType")
                         .WithMany()
@@ -291,6 +288,11 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("OrderStatus");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Core.Products.Domain.Storage", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Core.Users.Domain.ApplicationUser", b =>

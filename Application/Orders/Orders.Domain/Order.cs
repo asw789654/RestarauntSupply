@@ -1,5 +1,5 @@
-using Core.Users.Domain;
 using Core.Products.Domain;
+using Core.Users.Domain;
 
 namespace Orders.Domain;
 

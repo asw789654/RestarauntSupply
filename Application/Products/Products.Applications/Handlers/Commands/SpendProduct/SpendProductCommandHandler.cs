@@ -35,7 +35,8 @@ internal class SpendProductCommandHandler : IRequestHandler<SpendProductCommand,
 
     public async Task<GetProductDto> Handle(SpendProductCommand request, CancellationToken cancellationToken)
     {
-        var product = await _products.AsAsyncRead().SingleOrDefaultAsync(e => e.ProductId == request.ProductId, cancellationToken);
+        var productId = Guid.Parse(request.ProductId);
+        var product = await _products.AsAsyncRead().SingleOrDefaultAsync(e => e.ProductId == productId, cancellationToken);
         if (product is null)
         {
             throw new NotFoundException(request);
