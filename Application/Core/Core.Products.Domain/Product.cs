@@ -10,6 +10,8 @@ public class Product
 
     public bool IsDelivered { get; set; } = false;
 
+    public DateTime? MailTime { get; set; }
+
     public Guid? OrderId { get; set; }
 
     public DateTime? SpoilTime { get; set; }

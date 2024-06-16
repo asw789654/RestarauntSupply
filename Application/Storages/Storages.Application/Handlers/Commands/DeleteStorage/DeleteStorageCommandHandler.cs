@@ -2,7 +2,7 @@ using Core.Application.Abstractions.Persistence.Repository.Writing;
 using Core.Application.Exceptions;
 using Core.Auth.Application.Abstractions.Service;
 using Core.Auth.Application.Exceptions;
-using Core.Products.Domain;
+using Core.Storages.Domain;
 using Core.Users.Domain.Enums;
 using MediatR;
 using Storages.Application.Caches;

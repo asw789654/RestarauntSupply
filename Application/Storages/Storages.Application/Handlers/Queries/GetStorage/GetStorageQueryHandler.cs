@@ -4,7 +4,7 @@ using Core.Application.BaseRealizations;
 using Core.Application.Exceptions;
 using Core.Auth.Application.Abstractions.Service;
 using Core.Auth.Application.Exceptions;
-using Core.Products.Domain;
+using Core.Storages.Domain;
 using Core.Users.Domain.Enums;
 using Storages.Application.Caches;
 using Storages.Application.DTOs;

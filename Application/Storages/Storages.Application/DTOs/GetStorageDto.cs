@@ -1,5 +1,6 @@
 using Core.Application.Abstractions.Mappings;
 using Core.Products.Domain;
+using Core.Storages.Domain;
 
 namespace Storages.Application.DTOs;
 

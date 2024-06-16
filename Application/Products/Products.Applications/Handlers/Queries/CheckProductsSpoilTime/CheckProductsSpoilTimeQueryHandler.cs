@@ -51,9 +51,14 @@ internal class CheckProductsSpoilTimeQueryHandler : IRequestHandler<CheckProduct
 
         foreach (var product in query)
         {
-            _mqService.SendMessage("ProductSpoiled", JsonSerializer.Serialize(product));
+            if (!product.MailTime.HasValue || product.MailTime.Value.AddDays(1) <= DateTime.UtcNow) 
+            {
+                _mqService.SendMessage("spoiledProduct", JsonSerializer.Serialize(product));
+                product.MailTime = DateTime.UtcNow;
+                
+            }
         }
-
+        
         return new BaseListDto<GetProductDto>
         {
             TotalCount = totalCount,

@@ -1,21 +1,19 @@
 using Core.Application.Abstractions.Mappings;
-using Core.Mails.Domain;
+using Mails.Domain;
 
 namespace Mails.Applications.DTOs;
 
-public class GetProductDto : IMapFrom<Mails>
+public class GetMailDto
 {
-    public Guid ProductId { get; set; }
+    public string Message { get; set; } = default!;
 
-    public string Name { get; set; } = default!;
+    public string SenderMailAddress { get; set; } = default!;
 
-    public int Volume { get; set; }
+    public string RecipientMailAddress { get; set; } = default!;
 
-    public bool isDelivered { get; set; }
+    public string RecipientName { get; set; } = default!;
 
-    public Guid OrderId { get; set; }
+    public string Subject { get; set; } = default!;
 
-    public DateTime? SpoilTime { get; set; }
-
-    public int StorageTypeId { get; set; }
+    public string SenderPassword { get; set; } = default!;
 }

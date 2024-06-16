@@ -11,4 +11,12 @@
     <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Auth\Auth.Application\Auth.Application.csproj" />
+    <ProjectReference Include="..\..\Core\Core.Products.Domain\Core.Products.Domain.csproj" />
+    <ProjectReference Include="..\..\Mails\Mails.Applications\Mails.Applications.csproj" />
+    <ProjectReference Include="..\..\Users\Users.Application\Users.Application.csproj" />
+    <ProjectReference Include="..\Products.Applications\Products.Applications.csproj" />
+  </ItemGroup>
+
 </Project>

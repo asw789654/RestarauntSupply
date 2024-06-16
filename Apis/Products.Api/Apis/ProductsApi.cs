@@ -10,6 +10,7 @@ using Products.Applications.Handlers.Commands.DeleteProduct;
 using Products.Applications.Handlers.Commands.SpendProduct;
 using Products.Applications.Handlers.Commands.UpdateProduct;
 using Products.Applications.Handlers.Commands.UpdateProductDelivered;
+using Products.Applications.Handlers.Commands.UpdateProductMailTime;
 using Products.Applications.Handlers.Queries.CheckProductsSpoilTime;
 using Products.Applications.Handlers.Queries.GetProduct;
 using Products.Applications.Handlers.Queries.GetProducts;
@@ -104,6 +105,13 @@ public class ProductsApi : IApi
             .WithSummary("Update isDelivered")
             .RequireAuthorization()
             .Produces<GetProductDto>();
+
+        app.MapPut($"{_apiUrl}/MailTime/{{id}}", ChangeMailTime)
+            .WithTags(Tag)
+            .WithOpenApi()
+            .WithSummary("Update MailTime")
+            .RequireAuthorization()
+            .Produces<GetProductDto>();
         //ChangeVolumeProductCommand
         #endregion
     }
@@ -123,6 +131,7 @@ public class ProductsApi : IApi
         }, cancellationToken);
     }
 
+    [Authorize]
     private static async Task<GetProductDto[]> GetProducts(HttpContext httpContext, [FromServices] IMediator mediator, [AsParameters] GetProductsQuery query,
         CancellationToken cancellationToken)
     {
@@ -164,6 +173,7 @@ public class ProductsApi : IApi
         return mediator.Send(new DeleteProductCommand { ProductId = id }, cancellationToken);
     }
 
+    [Authorize]
     private static Task<GetProductDto> ChangeVolumeProduct([FromServices] IMediator mediator, [FromRoute] string id, [FromBody] SpendProductPayload payload,
         CancellationToken cancellationToken)
     {
@@ -184,5 +194,13 @@ public class ProductsApi : IApi
         return mediator.Send(command, cancellationToken);
     }
 
+    private static Task<GetProductDto> ChangeMailTime([FromServices] IMediator mediator, [FromRoute] string id, CancellationToken cancellationToken)
+    {
+        var command = new UpdateProductMailTimeCommand()
+        {
+            ProductId = id
+        };
+        return mediator.Send(command, cancellationToken);
+    }
 
 }

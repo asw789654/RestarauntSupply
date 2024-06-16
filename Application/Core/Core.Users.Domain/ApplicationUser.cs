@@ -1,3 +1,5 @@
+using System.Net.Mail;
+
 namespace Core.Users.Domain;
 
 public class ApplicationUser
@@ -13,6 +15,8 @@ public class ApplicationUser
     public DateTime? UpdatedDate { get; set; }
 
     public DateTime? LastSingInDate { get; set; }
+
+    public string? MailAddress { get; set; }
 
     public IEnumerable<ApplicationUserApplicationUserRole> Roles { get; set; } =
         new List<ApplicationUserApplicationUserRole>();

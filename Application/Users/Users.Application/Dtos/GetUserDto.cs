@@ -12,6 +12,8 @@ public class GetUserDto : IMapFrom<ApplicationUser>
 
     public int[] Roles { get; set; } = default!;
 
+    public string? MailAddress { get; set; } = default!;
+
     public void CreateMap(Profile profile)
     {
         profile.CreateMap<ApplicationUser, GetUserDto>()

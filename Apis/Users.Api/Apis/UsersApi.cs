@@ -13,6 +13,7 @@ using Users.Application.Handlers.Commands.UpdateUserPassword;
 using Users.Application.Handlers.Queries.GetUser;
 using Users.Application.Handlers.Queries.GetUsers;
 using Users.Application.Handlers.Queries.GetUsersCount;
+using Users.Application.Handlers.Queries.GetUsersMails;
 
 namespace Users.Api.Apis;
 
@@ -43,6 +44,13 @@ public class UsersApi : IApi
             .WithOpenApi()
             .WithSummary("Get users")
             .Produces<GetUserDto>()
+            .RequireAuthorization(AuthorizationPoliciesEnum.AdminGreetings.ToString());
+
+        app.MapGet($"{_apiUrl}/Mails", GetUsersMails)
+            .WithTags(Tag)
+            .WithOpenApi()
+            .WithSummary("Get users mails")
+            .Produces<GetUserMailDto>()
             .RequireAuthorization(AuthorizationPoliciesEnum.AdminGreetings.ToString());
 
         app.MapGet($"{_apiUrl}/{{id}}", GetUser)
@@ -120,6 +128,15 @@ public class UsersApi : IApi
     private static async Task<GetUserDto[]> GetUsers(HttpContext httpContext, [FromServices] IMediator mediator,
         [AsParameters] GetUsersQuery query,
         CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(query, cancellationToken);
+        httpContext.Response.Headers.Append("X-Total-Count", result.TotalCount.ToString());
+        return result.Items;
+    }
+
+    private static async Task<GetUserMailDto[]> GetUsersMails(HttpContext httpContext, [FromServices] IMediator mediator,
+       [AsParameters] GetUsersMailsQuery query,
+       CancellationToken cancellationToken)
     {
         var result = await mediator.Send(query, cancellationToken);
         httpContext.Response.Headers.Append("X-Total-Count", result.TotalCount.ToString());

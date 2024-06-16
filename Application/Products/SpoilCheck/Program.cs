@@ -1,14 +1,7 @@
-﻿using Auth.Application.Dtos;
-using Auth.Application.Handlers.Commands.CreateJwtToken;
-using Core.Application.Abstractions;
-using Core.Application.DTOs;
+﻿using Auth.Application.Handlers.Commands.CreateJwtToken;
 using Core.Products.Domain;
-using MediatR;
-using Products.Applications.DTOs;
-using Products.Applications.Handlers.Queries.CheckProductsSpoilTime;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text.Json;
 using Timer = System.Timers.Timer;
 
 public class SpoilCheck
@@ -20,10 +13,10 @@ public class SpoilCheck
         aTimer = new Timer();
         aTimer.Interval = 6000;
 
-        
+
         aTimer.Elapsed += OnTimedEvent;
 
-        
+
         aTimer.AutoReset = true;
 
         aTimer.Enabled = true;
@@ -32,7 +25,7 @@ public class SpoilCheck
         Console.ReadLine();
     }
 
-    private static Task<string> Autharization(string login,string password)
+    private static Task<string> Autharization(string login, string password)
     {
         var authData = new CreateJwtTokenCommand()
         {
@@ -45,7 +38,7 @@ public class SpoilCheck
         // отправляем запрос
         httpRequest.Content = content;
 
-        var response =  httpClient.Send(httpRequest);
+        var response = httpClient.Send(httpRequest);
         // получаем ответ
         var responceMessage = response.Content.ReadAsStringAsync();
 
@@ -61,7 +54,7 @@ public class SpoilCheck
 
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", serializedToken);
 
-        var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:5299/api/v1/Products/Spoiled");;
+        var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:5299/api/v1/Products/Spoiled"); ;
 
         var response = httpClient.Send(httpRequest);
 

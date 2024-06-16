@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Orders.Applications.DTOs;
+using Orders.Applications.Handlers.Commands.CancelOrder;
 using Orders.Applications.Handlers.Commands.CreateOrder;
 using Orders.Applications.Handlers.Commands.UpdateOrder;
 using Orders.Applications.Handlers.Commands.UpdateOrderStatus;
@@ -82,6 +83,13 @@ public class OrdersApi : IApi
             .RequireAuthorization()
             .Produces<GetOrderDto>();
 
+        app.MapPut($"{_apiUrl}/Cancel/{{id}}", CancelOrder)
+            .WithTags(Tag)
+            .WithOpenApi()
+            .WithSummary("Cancel Order")
+            .RequireAuthorization()
+            .Produces<GetOrderDto>();
+
         #endregion
     }
 
@@ -105,7 +113,7 @@ public class OrdersApi : IApi
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(query, cancellationToken);
-        //httpContext.Response.Headers.Append("X-Total-Count", result.TotalCount.ToString());
+
         return result.Items;
     }
 
@@ -117,7 +125,7 @@ public class OrdersApi : IApi
         return Results.Created($"{_apiUrl}/{{}}", result);
     }
 
-    [Authorize]
+
     private static Task<GetOrderDto> PutOrder([FromServices] IMediator mediator, [FromRoute] string id, [FromBody] UpdateOrderPayload payload,
         CancellationToken cancellationToken)
     {
@@ -129,8 +137,15 @@ public class OrdersApi : IApi
         return mediator.Send(command, cancellationToken);
     }
 
-    [Authorize(Roles = "Admin")]
+
     private static Task<GetOrderDto> PutOrderStatus([FromServices] IMediator mediator, [FromBody] UpdateOrderStatusCommand command,
+        CancellationToken cancellationToken)
+    {
+        return mediator.Send(command, cancellationToken);
+    }
+
+    [Authorize]
+    private static Task<GetOrderDto> CancelOrder([FromServices] IMediator mediator, [FromBody] CancelOrderCommand command,
         CancellationToken cancellationToken)
     {
         return mediator.Send(command, cancellationToken);

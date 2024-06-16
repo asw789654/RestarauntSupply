@@ -13,6 +13,8 @@ public class GetProductDto : IMapFrom<Product>
 
     public bool isDelivered { get; set; }
 
+    public DateTime? MailTime { get; set; }
+
     public Guid OrderId { get; set; }
 
     public DateTime? SpoilTime { get; set; }

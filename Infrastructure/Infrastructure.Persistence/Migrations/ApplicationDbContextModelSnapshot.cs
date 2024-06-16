@@ -50,6 +50,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<bool>("IsDelivered")
                         .HasColumnType("boolean");
 
+                    b.Property<DateTime?>("MailTime")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -76,7 +79,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Core.Products.Domain.Storage", b =>
+            modelBuilder.Entity("Core.Storages.Domain.Storage", b =>
                 {
                     b.Property<int>("StorageId")
                         .ValueGeneratedOnAdd()
@@ -136,6 +139,9 @@ namespace Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<string>("MailAddress")
+                        .HasColumnType("text");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -238,12 +244,12 @@ namespace Infrastructure.Persistence.Migrations
                         .WithMany("Products")
                         .HasForeignKey("OrderId");
 
-                    b.HasOne("Core.Products.Domain.Storage", null)
+                    b.HasOne("Core.Storages.Domain.Storage", null)
                         .WithMany("Products")
                         .HasForeignKey("StorageId");
                 });
 
-            modelBuilder.Entity("Core.Products.Domain.Storage", b =>
+            modelBuilder.Entity("Core.Storages.Domain.Storage", b =>
                 {
                     b.HasOne("Core.Storages.Domain.StorageType", "StorageType")
                         .WithMany()
@@ -290,7 +296,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Core.Products.Domain.Storage", b =>
+            modelBuilder.Entity("Core.Storages.Domain.Storage", b =>
                 {
                     b.Navigation("Products");
                 });

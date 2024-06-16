@@ -1,8 +1,8 @@
 using Core.Application.Abstractions;
 using FluentValidation;
 using Infrastracture.Mq;
-using Microsoft.Extensions.DependencyInjection;
 using Mails.Applications.Caches;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace Mails.Applications;
@@ -18,7 +18,6 @@ public static class DependencyInjection
             .AddSingleton<MailsMemoryCache>()
             .AddSingleton<MailsListMemoryCache>()
             .AddSingleton<MailsCountMemoryCache>()
-            .AddTransient<ICleanMailsCacheService, CleanMailsCacheService>()
-            .AddTransient<IMqService, MqService>();
+            .AddTransient<ICleanMailsCacheService, CleanMailsCacheService>();
     }
 }

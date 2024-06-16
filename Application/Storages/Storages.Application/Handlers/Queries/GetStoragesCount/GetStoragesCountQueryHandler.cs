@@ -1,7 +1,7 @@
 using Core.Application.Abstractions.Persistence.Repository.Read;
 using Core.Application.BaseRealizations;
 using Core.Auth.Application.Abstractions.Service;
-using Core.Products.Domain;
+using Core.Storages.Domain;
 using Storages.Application.Caches;
 
 namespace Storages.Application.Handlers.Queries.GetStoragesCount;

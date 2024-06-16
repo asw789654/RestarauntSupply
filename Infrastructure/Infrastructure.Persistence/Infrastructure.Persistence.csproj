@@ -15,6 +15,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Application\Auth\Auth.Domain\Auth.Domain.csproj" />
       <ProjectReference Include="..\..\Application\Core\Core.Application\Core.Application.csproj" />
+      <ProjectReference Include="..\..\Application\Core\Core.Storages.Domain\Core.Storages.Domain.csproj" />
       <ProjectReference Include="..\..\Application\Core\Core.Users.Domain\Core.Users.Domain.csproj" />
       <ProjectReference Include="..\..\Application\Orders\Orders.Domain\Orders.Domain.csproj" />
       <ProjectReference Include="..\..\Application\Storages\Storages.Domain\Storages.Domain.csproj" />

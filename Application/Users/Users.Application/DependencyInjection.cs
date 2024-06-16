@@ -14,6 +14,7 @@ public static class DependencyInjection
             .AddAutoMapper(Assembly.GetExecutingAssembly())
             .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), includeInternalTypes: true)
             .AddSingleton<ApplicationUsersListMemoryCache>()
+            .AddSingleton<ApplicationUsersMailsListMemoryCache>()
             .AddSingleton<ApplicationUserMemoryCache>()
             .AddSingleton<ApplicationUsersCountMemoryCache>();
     }
