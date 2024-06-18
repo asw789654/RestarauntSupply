@@ -54,7 +54,7 @@ public class SpoilCheck
                 var data = new SendMailCommand()
                 {
                     Message = $"Product {product.Name} will spoil in ${product.SpoilTime}",
-                    SenderMailAddress = "", //e-mail почты с которой отправлять
+                    SenderMailAddress = "", //e-mail
                     RecipientMailAddress = user.MailAddress,
                     RecipientName = user.Login,
                     Subject = "Spoiled product",
