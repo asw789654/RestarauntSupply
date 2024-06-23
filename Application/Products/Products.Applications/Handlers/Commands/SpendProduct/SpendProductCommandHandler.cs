@@ -5,11 +5,11 @@ using Core.Auth.Application.Abstractions.Service;
 using Core.Auth.Application.Exceptions;
 using Core.Users.Domain.Enums;
 using MediatR;
-using Products.Applications.Caches;
-using Products.Applications.DTOs;
 using Core.Products.Domain;
+using Products.Application.Caches;
+using Products.Application.DTOs;
 
-namespace Products.Applications.Handlers.Commands.SpendProduct;
+namespace Products.Application.Handlers.Commands.SpendProduct;
 
 internal class SpendProductCommandHandler : IRequestHandler<SpendProductCommand, GetProductDto>
 {

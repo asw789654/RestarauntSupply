@@ -1,17 +1,17 @@
-namespace Products.Applications.Caches;
+namespace Products.Application.Caches;
 
 internal class CleanProductsCacheService : ICleanProductsCacheService
 {
-    private readonly ProductsMemoryCache _productMemoryCache;
+    private readonly IProductsMemoryCache _productMemoryCache;
 
-    private readonly ProductsListMemoryCache _productsListMemoryCache;
+    private readonly IProductsListMemoryCache _productsListMemoryCache;
 
-    private readonly ProductsCountMemoryCache _productsCountMemoryCache;
+    private readonly IProductsCountMemoryCache _productsCountMemoryCache;
 
     public CleanProductsCacheService(
-        ProductsMemoryCache productMemoryCache,
-        ProductsListMemoryCache productsListMemoryCache,
-        ProductsCountMemoryCache productsCountMemoryCache)
+        IProductsMemoryCache productMemoryCache,
+        IProductsListMemoryCache productsListMemoryCache,
+        IProductsCountMemoryCache productsCountMemoryCache)
     {
         _productMemoryCache = productMemoryCache;
         _productsListMemoryCache = productsListMemoryCache;

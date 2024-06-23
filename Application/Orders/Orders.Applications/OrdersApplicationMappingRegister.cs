@@ -1,6 +1,5 @@
-
 using Core.Application.BaseRealizations;
 
-namespace Orders.Applications;
+namespace Orders.Application;
 
 public class OrdersApplicationMappingRegister() : MappingRegister(typeof(OrdersApplicationMappingRegister).Assembly);

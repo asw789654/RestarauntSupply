@@ -5,11 +5,11 @@ using Core.Auth.Application.Abstractions.Service;
 using Core.Auth.Application.Exceptions;
 using Core.Users.Domain.Enums;
 using MediatR;
-using Orders.Applications.Caches;
-using Orders.Applications.DTOs;
+using Orders.Application.Caches;
+using Orders.Application.DTOs;
 using Orders.Domain;
 
-namespace Orders.Applications.Handlers.Commands.UpdateOrder;
+namespace Orders.Application.Handlers.Commands.UpdateOrder;
 
 internal class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, GetOrderDto>
 {

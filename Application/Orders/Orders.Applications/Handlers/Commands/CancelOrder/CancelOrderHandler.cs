@@ -6,13 +6,12 @@ using Core.Auth.Application.Abstractions.Service;
 using Core.Auth.Application.Exceptions;
 using Core.Users.Domain.Enums;
 using MediatR;
-using Orders.Applications.Caches;
-using Orders.Applications.DTOs;
-using Orders.Applications.Handlers.Commands.CancelOrder;
+using Orders.Application.Caches;
+using Orders.Application.DTOs;
 using Orders.Domain;
 using System.Text.Json;
 
-namespace Orders.Applications.Handlers.Commands.CancelOrder;
+namespace Orders.Application.Handlers.Commands.CancelOrder;
 
 internal class CancelOrderCommandHandler : IRequestHandler<CancelOrderCommand, GetOrderDto>
 {

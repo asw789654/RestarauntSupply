@@ -7,8 +7,8 @@ using Core.Users.Domain.Enums;
 using Core.Auth.Application.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Users.Application.Caches;
 using Users.Application.Dtos;
+using Users.Application.Caches;
 
 namespace Users.Application.Handlers.Commands.UpdateUser;
 
@@ -20,19 +20,19 @@ internal class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Get
 
     private readonly ICurrentUserService _currentUserService;
     
-    private readonly ApplicationUsersListMemoryCache _applicationUsersListMemoryCache;
+    private readonly IApplicationUsersListMemoryCache _applicationUsersListMemoryCache;
     
-    private readonly ApplicationUsersCountMemoryCache _applicationUsersCountMemoryCache;
+    private readonly IApplicationUsersCountMemoryCache _applicationUsersCountMemoryCache;
     
-    private readonly ApplicationUserMemoryCache _applicationUserMemoryCache;
+    private readonly IApplicationUsersMemoryCache _applicationUserMemoryCache;
     
     private readonly ILogger<UpdateUserCommandHandler> _logger;
 
     public UpdateUserCommandHandler(IBaseWriteRepository<ApplicationUser> users, IMapper mapper,
         ICurrentUserService currentUserService,
-        ApplicationUsersListMemoryCache applicationUsersListMemoryCache,
-        ApplicationUsersCountMemoryCache applicationUsersCountMemoryCache,
-        ApplicationUserMemoryCache applicationUserMemoryCache,
+        IApplicationUsersListMemoryCache applicationUsersListMemoryCache,
+        IApplicationUsersCountMemoryCache applicationUsersCountMemoryCache,
+        IApplicationUsersMemoryCache applicationUserMemoryCache,
         ILogger<UpdateUserCommandHandler> logger)
     {
         _users = users;

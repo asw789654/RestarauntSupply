@@ -1,4 +1,4 @@
-namespace Orders.Applications.Handlers.Queries;
+namespace Orders.Application.Handlers.Queries;
 
 public class ListOrderFilter
 {

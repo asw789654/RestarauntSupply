@@ -1,4 +1,4 @@
-namespace Products.Applications.Handlers.Commands.UpdateProduct;
+namespace Products.Application.Handlers.Commands.UpdateProduct;
 
 public class UpdateProductPayload
 {

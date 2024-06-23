@@ -1,17 +1,18 @@
+
 namespace Storages.Application.Caches;
 
 internal class CleanStoragesCacheService : ICleanStoragesCacheService
 {
-    private readonly StoragesMemoryCache _storageMemoryCache;
+    private readonly IStoragesMemoryCache _storageMemoryCache;
 
-    private readonly StoragesListMemoryCache _storagesListMemoryCache;
+    private readonly IStoragesListMemoryCache _storagesListMemoryCache;
 
-    private readonly StoragesCountMemoryCache _storagesCountMemoryCache;
+    private readonly IStoragesCountMemoryCache _storagesCountMemoryCache;
 
     public CleanStoragesCacheService(
-        StoragesMemoryCache storageMemoryCache,
-        StoragesListMemoryCache storagesListMemoryCache,
-        StoragesCountMemoryCache storagesCountMemoryCache)
+        IStoragesMemoryCache storageMemoryCache,
+        IStoragesListMemoryCache storagesListMemoryCache,
+        IStoragesCountMemoryCache storagesCountMemoryCache)
     {
         _storageMemoryCache = storageMemoryCache;
         _storagesListMemoryCache = storagesListMemoryCache;

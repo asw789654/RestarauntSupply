@@ -1,6 +1,6 @@
 using Core.Application.Abstractions;
-using Mails.Applications.DTOs;
-using Mails.Applications.Handlers.Commands.SendMail;
+using Mails.Application.DTOs;
+using Mails.Application.Handlers.Commands.SendMail;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

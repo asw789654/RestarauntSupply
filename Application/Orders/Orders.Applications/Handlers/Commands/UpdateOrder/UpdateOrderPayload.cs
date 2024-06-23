@@ -1,6 +1,6 @@
 using Core.Products.Domain;
 
-namespace Orders.Applications.Handlers.Commands.UpdateOrder;
+namespace Orders.Application.Handlers.Commands.UpdateOrder;
 
 public class UpdateOrderPayload
 {

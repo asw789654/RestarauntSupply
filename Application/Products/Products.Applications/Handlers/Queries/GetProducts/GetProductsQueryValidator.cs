@@ -1,7 +1,8 @@
 using Core.Application.ValidatorsExtensions;
 using FluentValidation;
+using Products.Application.Handlers.Queries;
 
-namespace Products.Applications.Handlers.Queries.GetProducts;
+namespace Products.Application.Handlers.Queries.GetProducts;
 
 internal class GetProductsQueryValidator : AbstractValidator<GetProductsQuery>
 {

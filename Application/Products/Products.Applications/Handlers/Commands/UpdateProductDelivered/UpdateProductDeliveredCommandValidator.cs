@@ -1,7 +1,7 @@
 using Core.Application.ValidatorsExtensions;
 using FluentValidation;
 
-namespace Products.Applications.Handlers.Commands.UpdateProductDelivered;
+namespace Products.Application.Handlers.Commands.UpdateProductDelivered;
 
 internal class UpdateProductDeliveredCommandValidator : AbstractValidator<UpdateProductDeliveredCommand>
 {

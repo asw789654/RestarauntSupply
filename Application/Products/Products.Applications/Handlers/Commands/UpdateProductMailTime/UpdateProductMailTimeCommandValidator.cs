@@ -1,7 +1,7 @@
 using Core.Application.ValidatorsExtensions;
 using FluentValidation;
 
-namespace Products.Applications.Handlers.Commands.UpdateProductMailTime;
+namespace Products.Application.Handlers.Commands.UpdateProductMailTime;
 
 internal class UpdateProductMailTimeCommandValidator : AbstractValidator<UpdateProductMailTimeCommand>
 {

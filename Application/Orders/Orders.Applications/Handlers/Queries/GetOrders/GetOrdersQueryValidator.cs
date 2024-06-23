@@ -1,7 +1,8 @@
 using Core.Application.ValidatorsExtensions;
 using FluentValidation;
+using Orders.Application.Handlers.Queries;
 
-namespace Orders.Applications.Handlers.Queries.GetOrders;
+namespace Orders.Application.Handlers.Queries.GetOrders;
 
 internal class GetOrdersQueryValidator : AbstractValidator<GetOrdersQuery>
 {

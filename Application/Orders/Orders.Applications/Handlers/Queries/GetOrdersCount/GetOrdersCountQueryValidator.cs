@@ -1,7 +1,7 @@
 using FluentValidation;
-using Orders.Applications.Handlers.Queries;
+using Orders.Application.Handlers.Queries;
 
-namespace Orders.Applications.Handlers.Queries.GetOrdersCount;
+namespace Orders.Application.Handlers.Queries.GetOrdersCount;
 
 internal class GetOrdersCountQueryValidator : AbstractValidator<GetOrdersCountQuery>
 {

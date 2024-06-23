@@ -1,10 +1,10 @@
 using Core.Application.Abstractions.Mappings;
 using Core.Auth.Application.Attributes;
 using MediatR;
-using Orders.Applications.DTOs;
+using Orders.Application.DTOs;
 using Orders.Domain;
 
-namespace Orders.Applications.Handlers.Commands.UpdateOrderStatus;
+namespace Orders.Application.Handlers.Commands.UpdateOrderStatus;
 
 [RequestAuthorize]
 public class UpdateOrderStatusCommand : IMapTo<Order>, IRequest<GetOrderDto>

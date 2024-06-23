@@ -1,7 +1,7 @@
 using FluentValidation;
 using Core.Application.ValidatorsExtensions;
 
-namespace Products.Applications.Handlers.Commands.DeleteProduct;
+namespace Products.Application.Handlers.Commands.DeleteProduct;
 
 internal class DeleteProductCommandValidator : AbstractValidator<DeleteProductCommand>
 {

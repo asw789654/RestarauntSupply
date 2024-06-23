@@ -1,11 +1,11 @@
 using AutoMapper;
 using MailKit.Net.Smtp;
-using Mails.Applications.Caches;
-using Mails.Applications.DTOs;
+using Mails.Application.Caches;
+using Mails.Application.DTOs;
 using MediatR;
 using MimeKit;
 
-namespace Mails.Applications.Handlers.Commands.SendMail;
+namespace Mails.Application.Handlers.Commands.SendMail;
 
 internal class SendMailCommandHandler : IRequestHandler<SendMailCommand, GetMailDto>
 {

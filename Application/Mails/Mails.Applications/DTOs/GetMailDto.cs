@@ -1,7 +1,7 @@
 using Core.Application.Abstractions.Mappings;
 using Mails.Domain;
 
-namespace Mails.Applications.DTOs;
+namespace Mails.Application.DTOs;
 
 public class GetMailDto
 {

@@ -1,9 +1,9 @@
 using Core.Application.DTOs;
 using Core.Auth.Application.Attributes;
 using MediatR;
-using Products.Applications.DTOs;
+using Products.Application.DTOs;
 
-namespace Products.Applications.Handlers.Queries.CheckProductsSpoilTime;
+namespace Products.Application.Handlers.Queries.CheckProductsSpoilTime;
 
 [RequestAuthorize]
 public class CheckProductsSpoilTimeQuery : IRequest<BaseListDto<GetProductDto>>

@@ -2,9 +2,9 @@ using Core.Application.Abstractions.Mappings;
 using Core.Auth.Application.Attributes;
 using Core.Products.Domain;
 using MediatR;
-using Products.Applications.DTOs;
+using Products.Application.DTOs;
 
-namespace Products.Applications.Handlers.Commands.SpendProduct;
+namespace Products.Application.Handlers.Commands.SpendProduct;
 
 [RequestAuthorize]
 public class SpendProductCommand : IMapTo<Product>, IRequest<GetProductDto>

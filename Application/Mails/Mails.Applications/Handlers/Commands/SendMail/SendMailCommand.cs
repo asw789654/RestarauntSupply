@@ -1,8 +1,8 @@
 using Core.Auth.Application.Attributes;
-using Mails.Applications.DTOs;
+using Mails.Application.DTOs;
 using MediatR;
 
-namespace Mails.Applications.Handlers.Commands.SendMail;
+namespace Mails.Application.Handlers.Commands.SendMail;
 
 [RequestAuthorize]
 public class SendMailCommand : IRequest<GetMailDto>
@@ -18,5 +18,5 @@ public class SendMailCommand : IRequest<GetMailDto>
     public string Subject { get; set; } = default!;
 
     public string SenderPassword { get; set; } = default!;
-    
+
 }

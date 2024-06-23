@@ -1,9 +1,6 @@
 using Core.Auth.Application.Attributes;
-using Core.Products.Domain;
-using MediatR;
-using Orders.Applications.DTOs;
 
-namespace Orders.Applications.Handlers.Commands.CreateOrder;
+namespace Orders.Application.Handlers.Commands.CreateOrder;
 
 [RequestAuthorize]
 public class CreateOrderCommandProductPayload

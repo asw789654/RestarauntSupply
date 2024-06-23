@@ -1,7 +1,7 @@
 using Core.Auth.Application.Attributes;
 using MediatR;
 
-namespace Products.Applications.Handlers.Commands.DeleteProduct;
+namespace Products.Application.Handlers.Commands.DeleteProduct;
 
 [RequestAuthorize]
 public class DeleteProductCommand : IRequest<Unit>

@@ -1,8 +1,8 @@
 using Core.Auth.Application.Attributes;
 using MediatR;
-using Orders.Applications.DTOs;
+using Orders.Application.DTOs;
 
-namespace Orders.Applications.Handlers.Queries.GetOrder;
+namespace Orders.Application.Handlers.Queries.GetOrder;
 
 [RequestAuthorize]
 public class GetOrderQuery : IRequest<GetOrderDto>

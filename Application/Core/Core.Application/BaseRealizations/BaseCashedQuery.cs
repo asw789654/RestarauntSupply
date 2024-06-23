@@ -3,7 +3,8 @@ using MediatR;
 
 namespace Core.Application.BaseRealizations;
 
-public abstract class BaseCashedQuery<TRequest, TResult> : IRequestHandler<TRequest, TResult> where TRequest: IRequest<TResult>
+public abstract class BaseCashedQuery<TRequest, TResult> : IRequestHandler<TRequest, TResult> 
+    where TRequest : IRequest<TResult>
 {
     private readonly IBaseCache<TResult> Cache;
 
@@ -20,7 +21,7 @@ public abstract class BaseCashedQuery<TRequest, TResult> : IRequestHandler<TRequ
         }
 
         result = await SentQueryAsync(request, cancellationToken);
-        
+
         Cache.Set(request, result, 1);
         return result;
     }

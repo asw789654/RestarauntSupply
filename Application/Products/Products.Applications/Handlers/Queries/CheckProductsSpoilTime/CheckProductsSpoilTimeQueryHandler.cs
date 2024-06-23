@@ -5,11 +5,11 @@ using Core.Application.DTOs;
 using Core.Auth.Application.Abstractions.Service;
 using Core.Products.Domain;
 using MediatR;
-using Products.Applications.Caches;
-using Products.Applications.DTOs;
+using Products.Application.Caches;
+using Products.Application.DTOs;
 using System.Text.Json;
 
-namespace Products.Applications.Handlers.Queries.CheckProductsSpoilTime;
+namespace Products.Application.Handlers.Queries.CheckProductsSpoilTime;
 
 internal class CheckProductsSpoilTimeQueryHandler : IRequestHandler<CheckProductsSpoilTimeQuery, BaseListDto<GetProductDto>>
 {
@@ -51,14 +51,14 @@ internal class CheckProductsSpoilTimeQueryHandler : IRequestHandler<CheckProduct
 
         foreach (var product in query)
         {
-            if (!product.MailTime.HasValue || product.MailTime.Value.AddDays(1) <= DateTime.UtcNow) 
+            if (!product.MailTime.HasValue || product.MailTime.Value.AddDays(1) <= DateTime.UtcNow)
             {
                 _mqService.SendMessage("spoiledProduct", JsonSerializer.Serialize(product));
                 product.MailTime = DateTime.UtcNow;
-                
+
             }
         }
-        
+
         return new BaseListDto<GetProductDto>
         {
             TotalCount = totalCount,

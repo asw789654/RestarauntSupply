@@ -12,7 +12,10 @@ internal class GetStoragesCountQueryHandler : BaseCashedForUserQuery<GetStorages
 
     private readonly ICurrentUserService _currentUserService;
 
-    public GetStoragesCountQueryHandler(IBaseReadRepository<Storage> storages, StoragesCountMemoryCache cache, ICurrentUserService currentUserService) : base(cache, currentUserService.CurrentUserId!.Value)
+    public GetStoragesCountQueryHandler(
+        IBaseReadRepository<Storage> storages, 
+        IStoragesCountMemoryCache cache, 
+        ICurrentUserService currentUserService) : base(cache, currentUserService.CurrentUserId!.Value)
     {
         _storages = storages;
         _currentUserService = currentUserService;

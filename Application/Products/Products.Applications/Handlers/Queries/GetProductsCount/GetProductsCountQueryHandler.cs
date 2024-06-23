@@ -2,11 +2,9 @@ using Core.Application.Abstractions.Persistence.Repository.Read;
 using Core.Application.BaseRealizations;
 using Core.Auth.Application.Abstractions.Service;
 using Core.Products.Domain;
-using Core.Users.Domain.Enums;
-using Products.Applications.Caches;
-using Products.Applications.Handlers.Queries;
+using Products.Application.Caches;
 
-namespace Products.Applications.Handlers.Queries.GetProductsCount;
+namespace Products.Application.Handlers.Queries.GetProductsCount;
 
 internal class GetProductsCountQueryHandler : BaseCashedForUserQuery<GetProductsCountQuery, int>
 {
@@ -14,7 +12,10 @@ internal class GetProductsCountQueryHandler : BaseCashedForUserQuery<GetProducts
 
     private readonly ICurrentUserService _currentUserService;
 
-    public GetProductsCountQueryHandler(IBaseReadRepository<Product> products, ProductsCountMemoryCache cache, ICurrentUserService currentUserService) : base(cache, currentUserService.CurrentUserId!.Value)
+    public GetProductsCountQueryHandler(
+        IBaseReadRepository<Product> products,
+        IProductsCountMemoryCache cache,
+        ICurrentUserService currentUserService) : base(cache, currentUserService.CurrentUserId!.Value)
     {
         _products = products;
         _currentUserService = currentUserService;

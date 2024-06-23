@@ -1,7 +1,7 @@
 using Core.Application.ValidatorsExtensions;
 using FluentValidation;
 
-namespace Products.Applications.Handlers.Commands.SpendProduct;
+namespace Products.Application.Handlers.Commands.SpendProduct;
 
 internal class SpendProductCommandValidator : AbstractValidator<SpendProductCommand>
 {

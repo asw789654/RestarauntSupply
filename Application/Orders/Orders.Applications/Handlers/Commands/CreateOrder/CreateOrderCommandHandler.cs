@@ -5,11 +5,11 @@ using Core.Auth.Application.Exceptions;
 using Core.Products.Domain;
 using Core.Users.Domain.Enums;
 using MediatR;
-using Orders.Applications.Caches;
-using Orders.Applications.DTOs;
+using Orders.Application.Caches;
+using Orders.Application.DTOs;
 using Orders.Domain;
 
-namespace Orders.Applications.Handlers.Commands.CreateOrder;
+namespace Orders.Application.Handlers.Commands.CreateOrder;
 
 internal class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, GetOrderDto>
 {
@@ -24,9 +24,9 @@ internal class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, G
     private readonly IBaseWriteRepository<Product> _products;
 
     public CreateOrderCommandHandler(
-        IBaseWriteRepository<Order> orders, 
-        ICurrentUserService currentUserService, 
-        IMapper mapper, 
+        IBaseWriteRepository<Order> orders,
+        ICurrentUserService currentUserService,
+        IMapper mapper,
         ICleanOrdersCacheService cleanOrdersCacheService,
         IBaseWriteRepository<Product> products)
     {
@@ -39,7 +39,7 @@ internal class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, G
 
     public async Task<GetOrderDto> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        
+
         var userId = _currentUserService.CurrentUserId;
 
         if (_currentUserService.CurrentUserId != userId &&
@@ -48,8 +48,8 @@ internal class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, G
             throw new ForbiddenException();
         }
         var products = new List<Product>();
-        foreach (var product in request.Products) 
-        { 
+        foreach (var product in request.Products)
+        {
             products.Add(new Product()
             {
                 Name = product.Name,

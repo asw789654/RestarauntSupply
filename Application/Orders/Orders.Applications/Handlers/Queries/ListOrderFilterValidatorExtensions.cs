@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Orders.Applications.Handlers.Queries;
+namespace Orders.Application.Handlers.Queries;
 
 internal class BaseListOrderFilterValidator : AbstractValidator<ListOrderFilter>
 {

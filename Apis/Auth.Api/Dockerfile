@@ -5,7 +5,6 @@ USER app
 WORKDIR /app
 ENV ASPNETCORE_ENVIRONMENT Development
 EXPOSE 8080
-EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
@@ -19,10 +18,9 @@ COPY ["Application/Auth/Auth.Domain/Auth.Domain.csproj", "Application/Auth/Auth.
 COPY ["Application/Core/Auth/Core.Auth.Api/Core.Auth.Api.csproj", "Application/Core/Auth/Core.Auth.Api/"]
 COPY ["Application/Core/Core.Api/Core.Api.csproj", "Application/Core/Core.Api/"]
 COPY ["Infrastructure/Infrastructure.Persistence/Infrastructure.Persistence.csproj", "Infrastructure/Infrastructure.Persistence/"]
-COPY ["Application/Orders/Orders.Domain/Orders.Domain.csproj", "Application/Orders/Orders.Domain/"]
-COPY ["Application/Core/Core.Products.Domain/Core.Products.Domain.csproj", "Application/Core/Core.Products.Domain/"]
 COPY ["Application/Core/Core.Storages.Domain/Core.Storages.Domain.csproj", "Application/Core/Core.Storages.Domain/"]
-COPY ["Application/Storages/Storages.Domain/Storages.Domain.csproj", "Application/Storages/Storages.Domain/"]
+COPY ["Application/Core/Core.Products.Domain/Core.Products.Domain.csproj", "Application/Core/Core.Products.Domain/"]
+COPY ["Application/Orders/Orders.Domain/Orders.Domain.csproj", "Application/Orders/Orders.Domain/"]
 RUN dotnet restore "./Apis/Auth.Api/Auth.Api.csproj"
 COPY . .
 WORKDIR "/src/Apis/Auth.Api"

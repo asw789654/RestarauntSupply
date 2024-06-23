@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using Orders.Domain;
 
-namespace Orders.Applications.Handlers.Queries;
+namespace Orders.Application.Handlers.Queries;
 
 internal static class ListOrderWhere
 {

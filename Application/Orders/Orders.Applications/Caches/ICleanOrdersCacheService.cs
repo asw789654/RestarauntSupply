@@ -1,4 +1,4 @@
-namespace Orders.Applications.Caches;
+namespace Orders.Application.Caches;
 
 internal interface ICleanOrdersCacheService
 {

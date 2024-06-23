@@ -4,10 +4,10 @@ using Core.Application.BaseRealizations;
 using Core.Application.DTOs;
 using Core.Auth.Application.Abstractions.Service;
 using Core.Products.Domain;
-using Products.Applications.Caches;
-using Products.Applications.DTOs;
+using Products.Application.Caches;
+using Products.Application.DTOs;
 
-namespace Products.Applications.Handlers.Queries.GetProducts;
+namespace Products.Application.Handlers.Queries.GetProducts;
 
 public class GetProductsQueryHandler : BaseCashedForUserQuery<GetProductsQuery, BaseListDto<GetProductDto>>
 {
@@ -17,7 +17,11 @@ public class GetProductsQueryHandler : BaseCashedForUserQuery<GetProductsQuery, 
 
     private readonly IMapper _mapper;
 
-    public GetProductsQueryHandler(IBaseReadRepository<Product> products, ICurrentUserService currentUserService, IMapper mapper, ProductsListMemoryCache cache) : base(cache, currentUserService.CurrentUserId!.Value)
+    public GetProductsQueryHandler(
+        IBaseReadRepository<Product> products,
+        ICurrentUserService currentUserService,
+        IMapper mapper,
+        IProductsListMemoryCache cache) : base(cache, currentUserService.CurrentUserId!.Value)
     {
         _products = products;
         _currentUserService = currentUserService;

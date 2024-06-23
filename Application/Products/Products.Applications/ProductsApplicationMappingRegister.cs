@@ -1,6 +1,5 @@
-
 using Core.Application.BaseRealizations;
 
-namespace Products.Applications;
+namespace Products.Application;
 
 public class ProductsApplicationMappingRegister() : MappingRegister(typeof(ProductsApplicationMappingRegister).Assembly);

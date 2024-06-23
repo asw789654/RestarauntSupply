@@ -20,7 +20,7 @@ internal class GetStorageQueryHandler : BaseCashedForUserQuery<GetStorageQuery, 
     private readonly IMapper _mapper;
 
     public GetStorageQueryHandler(IBaseReadRepository<Storage> storages, ICurrentUserService currentUserService, IMapper mapper,
-        StoragesMemoryCache cache) : base(cache, currentUserService.CurrentUserId!.Value)
+        IStoragesMemoryCache cache) : base(cache, currentUserService.CurrentUserId!.Value)
     {
         _storages = storages;
         _currentUserService = currentUserService;

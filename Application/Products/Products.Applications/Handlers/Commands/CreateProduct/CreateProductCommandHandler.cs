@@ -2,11 +2,11 @@ using AutoMapper;
 using Core.Application.Abstractions.Persistence.Repository.Writing;
 using Core.Auth.Application.Abstractions.Service;
 using MediatR;
-using Products.Applications.Caches;
-using Products.Applications.DTOs;
 using Core.Products.Domain;
+using Products.Application.Caches;
+using Products.Application.DTOs;
 
-namespace Products.Applications.Handlers.Commands.CreateProduct;
+namespace Products.Application.Handlers.Commands.CreateProduct;
 
 internal class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, GetProductDto>
 {

@@ -1,17 +1,17 @@
-namespace Orders.Applications.Caches;
+namespace Orders.Application.Caches;
 
 internal class CleanOrdersCacheService : ICleanOrdersCacheService
 {
-    private readonly OrdersMemoryCache _orderMemoryCache;
+    private readonly IOrdersMemoryCache _orderMemoryCache;
 
-    private readonly OrdersListMemoryCache _ordersListMemoryCache;
+    private readonly IOrdersListMemoryCache _ordersListMemoryCache;
 
-    private readonly OrdersCountMemoryCache _ordersCountMemoryCache;
+    private readonly IOrdersCountMemoryCache _ordersCountMemoryCache;
 
     public CleanOrdersCacheService(
-        OrdersMemoryCache orderMemoryCache,
-        OrdersListMemoryCache ordersListMemoryCache,
-        OrdersCountMemoryCache ordersCountMemoryCache)
+        IOrdersMemoryCache orderMemoryCache,
+        IOrdersListMemoryCache ordersListMemoryCache,
+        IOrdersCountMemoryCache ordersCountMemoryCache)
     {
         _orderMemoryCache = orderMemoryCache;
         _ordersListMemoryCache = ordersListMemoryCache;

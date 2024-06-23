@@ -14,7 +14,10 @@ internal class GetUsersMailsQueryHandler : BaseCashedQuery<GetUsersMailsQuery, B
 
     private readonly IMapper _mapper;
 
-    public GetUsersMailsQueryHandler(IBaseReadRepository<ApplicationUser> users, IMapper mapper, ApplicationUsersMailsListMemoryCache cache) : base(cache)
+    public GetUsersMailsQueryHandler(
+        IBaseReadRepository<ApplicationUser> users, 
+        IMapper mapper, 
+        IApplicationUsersMailListMemoryCache cache) : base(cache)
     {
         _users = users;
         _mapper = mapper;

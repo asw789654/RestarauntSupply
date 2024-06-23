@@ -1,11 +1,9 @@
-using Core.Application.Abstractions;
 using FluentValidation;
-using Infrastracture.Mq;
-using Mails.Applications.Caches;
+using Mails.Application.Caches;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace Mails.Applications;
+namespace Mails.Application;
 
 public static class DependencyInjection
 {
@@ -15,9 +13,6 @@ public static class DependencyInjection
             .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()))
             .AddAutoMapper(Assembly.GetExecutingAssembly())
             .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), includeInternalTypes: true)
-            .AddSingleton<MailsMemoryCache>()
-            .AddSingleton<MailsListMemoryCache>()
-            .AddSingleton<MailsCountMemoryCache>()
             .AddTransient<ICleanMailsCacheService, CleanMailsCacheService>();
     }
 }

@@ -1,4 +1,4 @@
-namespace Mails.Applications.Caches;
+namespace Mails.Application.Caches;
 
 internal interface ICleanMailsCacheService
 {

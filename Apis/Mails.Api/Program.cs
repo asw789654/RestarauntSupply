@@ -1,6 +1,3 @@
-using System.Reflection;
-using Serilog;
-using Serilog.Events;
 using Core.Api;
 using Core.Api.Middlewares;
 using Core.Application;
@@ -8,7 +5,11 @@ using Core.Auth.Api;
 using Core.Auth.Application;
 using Core.Auth.Application.Middlewares;
 using Infrastructure.Persistence;
-using Mails.Applications;
+using Mails.Application;
+using Serilog;
+using Serilog.Events;
+using System.Reflection;
+using Infrastructure.DistributedCache;
 
 try
 {
@@ -36,7 +37,8 @@ try
         .AddPersistenceServices(builder.Configuration)
         .AddCoreAuthServices()
         .AddAllCors()
-        .AddMailsApplication();
+        .AddMailsApplication()
+        .AddDistributedCacheServices(builder.Configuration);
 
     var app = builder.Build();
 

@@ -1,7 +1,7 @@
 ﻿using Auth.Application.Handlers.Commands.CreateJwtToken;
 using Core.Products.Domain;
-using Mails.Applications.Handlers.Commands.SendMail;
-using Products.Applications.Handlers.Commands.UpdateProductMailTime;
+using Mails.Application.Handlers.Commands.SendMail;
+using Products.Application.Handlers.Commands.UpdateProductMailTime;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Serilog;

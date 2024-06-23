@@ -11,10 +11,13 @@ namespace Users.Application.Handlers.Queries.GetUsers;
 internal class GetUsersQueryHandler : BaseCashedQuery<GetUsersQuery, BaseListDto<GetUserDto>>
 {
     private readonly IBaseReadRepository<ApplicationUser> _users;
-    
+
     private readonly IMapper _mapper;
-    
-    public GetUsersQueryHandler(IBaseReadRepository<ApplicationUser> users, IMapper mapper, ApplicationUsersListMemoryCache cache) : base(cache)
+
+    public GetUsersQueryHandler(
+        IBaseReadRepository<ApplicationUser> users,
+        IMapper mapper,
+        IApplicationUsersListMemoryCache cache) : base(cache)
     {
         _users = users;
         _mapper = mapper;
@@ -23,7 +26,7 @@ internal class GetUsersQueryHandler : BaseCashedQuery<GetUsersQuery, BaseListDto
     public override async Task<BaseListDto<GetUserDto>> SentQueryAsync(GetUsersQuery request, CancellationToken cancellationToken)
     {
         var query = _users.AsQueryable().Where(ListWhere.Where(request));
-        
+
         if (request.Offset.HasValue)
         {
             query = query.Skip(request.Offset.Value);
@@ -33,7 +36,7 @@ internal class GetUsersQueryHandler : BaseCashedQuery<GetUsersQuery, BaseListDto
         {
             query = query.Take(request.Limit.Value);
         }
-        
+
         query = query.OrderBy(e => e.ApplicationUserId);
 
         var entitiesResult = await _users.AsAsyncRead().ToArrayAsync(query, cancellationToken);

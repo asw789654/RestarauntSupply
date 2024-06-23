@@ -1,10 +1,10 @@
 using Core.Application.Abstractions.Persistence.Repository.Read;
 using Core.Application.BaseRealizations;
 using Core.Auth.Application.Abstractions.Service;
-using Orders.Applications.Caches;
+using Orders.Application.Caches;
 using Orders.Domain;
 
-namespace Orders.Applications.Handlers.Queries.GetOrdersCount;
+namespace Orders.Application.Handlers.Queries.GetOrdersCount;
 
 internal class GetOrdersCountQueryHandler : BaseCashedForUserQuery<GetOrdersCountQuery, int>
 {
@@ -12,7 +12,10 @@ internal class GetOrdersCountQueryHandler : BaseCashedForUserQuery<GetOrdersCoun
 
     private readonly ICurrentUserService _currentUserService;
 
-    public GetOrdersCountQueryHandler(IBaseReadRepository<Order> orders, OrdersCountMemoryCache cache, ICurrentUserService currentUserService) : base(cache, currentUserService.CurrentUserId!.Value)
+    public GetOrdersCountQueryHandler(
+        IBaseReadRepository<Order> orders,
+        IOrdersCountMemoryCache cache,
+        ICurrentUserService currentUserService) : base(cache, currentUserService.CurrentUserId!.Value)
     {
         _orders = orders;
         _currentUserService = currentUserService;

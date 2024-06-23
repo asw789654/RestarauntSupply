@@ -5,11 +5,11 @@ using Core.Application.Exceptions;
 using Core.Auth.Application.Abstractions.Service;
 using Core.Auth.Application.Exceptions;
 using Core.Users.Domain.Enums;
-using Orders.Applications.Caches;
-using Orders.Applications.DTOs;
+using Orders.Application.Caches;
+using Orders.Application.DTOs;
 using Orders.Domain;
 
-namespace Orders.Applications.Handlers.Queries.GetOrder;
+namespace Orders.Application.Handlers.Queries.GetOrder;
 
 internal class GetOrderQueryHandler : BaseCashedForUserQuery<GetOrderQuery, GetOrderDto>
 {
@@ -19,8 +19,11 @@ internal class GetOrderQueryHandler : BaseCashedForUserQuery<GetOrderQuery, GetO
 
     private readonly IMapper _mapper;
 
-    public GetOrderQueryHandler(IBaseReadRepository<Order> orders, ICurrentUserService currentUserService, IMapper mapper,
-        OrdersMemoryCache cache) : base(cache, currentUserService.CurrentUserId!.Value)
+    public GetOrderQueryHandler(
+        IBaseReadRepository<Order> orders,
+        ICurrentUserService currentUserService,
+        IMapper mapper,
+        IOrdersMemoryCache cache) : base(cache, currentUserService.CurrentUserId!.Value)
     {
         _orders = orders;
         _currentUserService = currentUserService;

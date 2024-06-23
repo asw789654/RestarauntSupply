@@ -1,11 +1,11 @@
-using System.Reflection;
 using Core.Application.Abstractions;
 using FluentValidation;
 using Infrastracture.Mq;
 using Microsoft.Extensions.DependencyInjection;
-using Orders.Applications.Caches;
+using Orders.Application.Caches;
+using System.Reflection;
 
-namespace Orders.Applications;
+namespace Orders.Application;
 
 public static class DependencyInjection
 {
@@ -15,10 +15,7 @@ public static class DependencyInjection
             .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()))
             .AddAutoMapper(Assembly.GetExecutingAssembly())
             .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), includeInternalTypes: true)
-            .AddSingleton<OrdersMemoryCache>()
-            .AddSingleton<OrdersListMemoryCache>()
-            .AddSingleton<OrdersCountMemoryCache>()
             .AddTransient<ICleanOrdersCacheService, CleanOrdersCacheService>()
-            .AddTransient<IMqService,MqService>();        
+            .AddTransient<IMqService, MqService>();
     }
 }

@@ -1,7 +1,6 @@
-using System.Reflection;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using Users.Application.Caches;
+using System.Reflection;
 
 namespace Users.Application;
 
@@ -12,10 +11,7 @@ public static class DependencyInjection
         return services
             .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()))
             .AddAutoMapper(Assembly.GetExecutingAssembly())
-            .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), includeInternalTypes: true)
-            .AddSingleton<ApplicationUsersListMemoryCache>()
-            .AddSingleton<ApplicationUsersMailsListMemoryCache>()
-            .AddSingleton<ApplicationUserMemoryCache>()
-            .AddSingleton<ApplicationUsersCountMemoryCache>();
+            .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), includeInternalTypes: true);
+
     }
 }

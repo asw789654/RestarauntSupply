@@ -37,7 +37,11 @@ try
         .AddPersistenceServices(builder.Configuration)
         .AddCoreAuthServices()
         .AddAllCors()
-        .AddAuthApplication();
+        .AddAuthApplication()
+        .AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = builder.Configuration.GetConnectionString("AuthRedisString");
+        });
 
     var app = builder.Build();
     

@@ -1,4 +1,4 @@
-namespace Products.Applications.Caches;
+namespace Products.Application.Caches;
 
 internal interface ICleanProductsCacheService
 {

@@ -1,7 +1,7 @@
 using Core.Application.Abstractions.Mappings;
 using Core.Products.Domain;
 
-namespace Products.Applications.DTOs;
+namespace Products.Application.DTOs;
 
 public class GetProductDto : IMapFrom<Product>
 {

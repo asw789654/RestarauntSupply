@@ -4,10 +4,10 @@ using Core.Auth.Application.Abstractions.Service;
 using Core.Auth.Application.Exceptions;
 using Core.Users.Domain.Enums;
 using MediatR;
-using Products.Applications.Caches;
 using Core.Products.Domain;
+using Products.Application.Caches;
 
-namespace Products.Applications.Handlers.Commands.DeleteProduct;
+namespace Products.Application.Handlers.Commands.DeleteProduct;
 
 internal class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, Unit>
 {

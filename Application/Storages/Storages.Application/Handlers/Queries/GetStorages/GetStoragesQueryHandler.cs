@@ -17,7 +17,10 @@ public class GetStoragesQueryHandler : BaseCashedForUserQuery<GetStoragesQuery, 
 
     private readonly IMapper _mapper;
 
-    public GetStoragesQueryHandler(IBaseReadRepository<Storage> storages, ICurrentUserService currentUserService, IMapper mapper, StoragesListMemoryCache cache) : base(cache, currentUserService.CurrentUserId!.Value)
+    public GetStoragesQueryHandler(
+        IBaseReadRepository<Storage> storages, 
+        ICurrentUserService currentUserService, 
+        IMapper mapper, IStoragesListMemoryCache cache) : base(cache, currentUserService.CurrentUserId!.Value)
     {
         _storages = storages;
         _currentUserService = currentUserService;

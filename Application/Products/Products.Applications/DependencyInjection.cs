@@ -2,10 +2,10 @@ using Core.Application.Abstractions;
 using FluentValidation;
 using Infrastracture.Mq;
 using Microsoft.Extensions.DependencyInjection;
-using Products.Applications.Caches;
+using Products.Application.Caches;
 using System.Reflection;
 
-namespace Products.Applications;
+namespace Products.Application;
 
 public static class DependencyInjection
 {
@@ -15,9 +15,6 @@ public static class DependencyInjection
             .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()))
             .AddAutoMapper(Assembly.GetExecutingAssembly())
             .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), includeInternalTypes: true)
-            .AddSingleton<ProductsMemoryCache>()
-            .AddSingleton<ProductsListMemoryCache>()
-            .AddSingleton<ProductsCountMemoryCache>()
             .AddTransient<ICleanProductsCacheService, CleanProductsCacheService>()
             .AddTransient<IMqService, MqService>();
     }

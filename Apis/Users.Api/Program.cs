@@ -1,6 +1,3 @@
-using System.Reflection;
-using Serilog;
-using Serilog.Events;
 using Core.Api;
 using Core.Api.Middlewares;
 using Core.Application;
@@ -8,7 +5,11 @@ using Core.Auth.Api;
 using Core.Auth.Application;
 using Core.Auth.Application.Middlewares;
 using Infrastructure.Persistence;
+using Serilog;
+using Serilog.Events;
+using System.Reflection;
 using Users.Application;
+using Infrastructure.DistributedCache;
 
 try
 {
@@ -17,7 +18,7 @@ try
     const string appName = "Users management API v1";
 
     var builder = WebApplication.CreateBuilder(args);
-    
+
     builder.Host.UseSerilog((ctx, lc) => lc
 #if DEBUG
         .WriteTo.Console()
@@ -37,7 +38,8 @@ try
         .AddPersistenceServices(builder.Configuration)
         .AddCoreAuthServices()
         .AddAllCors()
-        .AddUserApplication();
+        .AddUserApplication()
+        .AddDistributedCacheServices(builder.Configuration);
 
     var app = builder.Build();
 

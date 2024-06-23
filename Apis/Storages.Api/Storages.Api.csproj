@@ -22,6 +22,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
     <PackageReference Include="Serilog" Version="3.1.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
@@ -40,6 +41,7 @@
     <ProjectReference Include="..\..\Application\Core\Auth\Core.Auth.Api\Core.Auth.Api.csproj" />
     <ProjectReference Include="..\..\Application\Core\Core.Api\Core.Api.csproj" />
     <ProjectReference Include="..\..\Application\Storages\Storages.Application\Storages.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Infrastructure.DistributedCache\Infrastructure.DistributedCache.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Infrastructure.Persistence\Infrastructure.Persistence.csproj" />
   </ItemGroup>
 

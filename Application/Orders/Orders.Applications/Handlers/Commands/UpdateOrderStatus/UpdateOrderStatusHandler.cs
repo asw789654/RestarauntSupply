@@ -6,12 +6,12 @@ using Core.Auth.Application.Abstractions.Service;
 using Core.Auth.Application.Exceptions;
 using Core.Users.Domain.Enums;
 using MediatR;
-using Orders.Applications.Caches;
-using Orders.Applications.DTOs;
+using Orders.Application.Caches;
+using Orders.Application.DTOs;
 using Orders.Domain;
 using System.Text.Json;
 
-namespace Orders.Applications.Handlers.Commands.UpdateOrderStatus;
+namespace Orders.Application.Handlers.Commands.UpdateOrderStatus;
 
 internal class UpdateOrderStatusCommandHandler : IRequestHandler<UpdateOrderStatusCommand, GetOrderDto>
 {

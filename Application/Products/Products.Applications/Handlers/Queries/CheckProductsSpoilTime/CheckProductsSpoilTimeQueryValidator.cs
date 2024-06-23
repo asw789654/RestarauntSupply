@@ -1,7 +1,7 @@
 using Core.Application.ValidatorsExtensions;
 using FluentValidation;
 
-namespace Products.Applications.Handlers.Queries.CheckProductsSpoilTime;
+namespace Products.Application.Handlers.Queries.CheckProductsSpoilTime;
 
 internal class CheckProductsSpoilTimeQueryValidator : AbstractValidator<CheckProductsSpoilTimeQuery>
 {

@@ -1,4 +1,4 @@
-namespace Products.Applications.Handlers.Commands.SpendProduct;
+namespace Products.Application.Handlers.Commands.SpendProduct;
 
 public class SpendProductPayload
 {

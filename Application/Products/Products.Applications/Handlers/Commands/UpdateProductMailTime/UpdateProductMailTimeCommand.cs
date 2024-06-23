@@ -1,10 +1,10 @@
 using Core.Application.Abstractions.Mappings;
 using Core.Auth.Application.Attributes;
 using MediatR;
-using Products.Applications.DTOs;
 using Core.Products.Domain;
+using Products.Application.DTOs;
 
-namespace Products.Applications.Handlers.Commands.UpdateProductMailTime;
+namespace Products.Application.Handlers.Commands.UpdateProductMailTime;
 
 [RequestAuthorize]
 public class UpdateProductMailTimeCommand : IMapTo<Product>, IRequest<GetProductDto>

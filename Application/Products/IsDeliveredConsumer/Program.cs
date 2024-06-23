@@ -1,10 +1,8 @@
 ﻿using Auth.Application.Handlers.Commands.CreateJwtToken;
 using Core.Products.Domain;
-using Products.Applications.DTOs;
-using Products.Applications.Handlers.Commands.UpdateProductDelivered;
+using Products.Application.Handlers.Commands.UpdateProductDelivered;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;

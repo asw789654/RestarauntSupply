@@ -1,10 +1,10 @@
 using Core.Application.DTOs;
 using Core.Auth.Application.Attributes;
 using MediatR;
-using Orders.Applications.DTOs;
-using Orders.Applications.Handlers.Queries;
+using Orders.Application.DTOs;
+using Orders.Application.Handlers.Queries;
 
-namespace Orders.Applications.Handlers.Queries.GetOrders;
+namespace Orders.Application.Handlers.Queries.GetOrders;
 
 [RequestAuthorize]
 public class GetOrdersQuery : ListOrderFilter, IBasePaginationFilter, IRequest<BaseListDto<GetOrderDto>>

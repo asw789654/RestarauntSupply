@@ -6,10 +6,10 @@ using Core.Auth.Application.Abstractions.Service;
 using Core.Auth.Application.Exceptions;
 using Core.Products.Domain;
 using Core.Users.Domain.Enums;
-using Products.Applications.Caches;
-using Products.Applications.DTOs;
+using Products.Application.Caches;
+using Products.Application.DTOs;
 
-namespace Products.Applications.Handlers.Queries.GetProduct;
+namespace Products.Application.Handlers.Queries.GetProduct;
 
 internal class GetProductQueryHandler : BaseCashedForUserQuery<GetProductQuery, GetProductDto>
 {
@@ -19,8 +19,11 @@ internal class GetProductQueryHandler : BaseCashedForUserQuery<GetProductQuery, 
 
     private readonly IMapper _mapper;
 
-    public GetProductQueryHandler(IBaseReadRepository<Product> products, ICurrentUserService currentUserService, IMapper mapper,
-        ProductsMemoryCache cache) : base(cache, currentUserService.CurrentUserId!.Value)
+    public GetProductQueryHandler(
+        IBaseReadRepository<Product> products, 
+        ICurrentUserService currentUserService, 
+        IMapper mapper,
+        IProductsMemoryCache cache) : base(cache, currentUserService.CurrentUserId!.Value)
     {
         _products = products;
         _currentUserService = currentUserService;

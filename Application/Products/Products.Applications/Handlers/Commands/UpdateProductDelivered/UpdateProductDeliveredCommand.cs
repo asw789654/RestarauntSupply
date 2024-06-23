@@ -1,10 +1,10 @@
 using Core.Application.Abstractions.Mappings;
 using Core.Auth.Application.Attributes;
 using MediatR;
-using Products.Applications.DTOs;
 using Core.Products.Domain;
+using Products.Application.DTOs;
 
-namespace Products.Applications.Handlers.Commands.UpdateProductDelivered;
+namespace Products.Application.Handlers.Commands.UpdateProductDelivered;
 
 [RequestAuthorize]
 public class UpdateProductDeliveredCommand : IMapTo<Product>, IRequest<GetProductDto>

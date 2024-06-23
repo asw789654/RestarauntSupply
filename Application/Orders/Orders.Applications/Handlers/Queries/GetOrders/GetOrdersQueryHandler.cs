@@ -3,11 +3,11 @@ using Core.Application.Abstractions.Persistence.Repository.Read;
 using Core.Application.BaseRealizations;
 using Core.Application.DTOs;
 using Core.Auth.Application.Abstractions.Service;
-using Orders.Applications.Caches;
-using Orders.Applications.DTOs;
+using Orders.Application.Caches;
+using Orders.Application.DTOs;
 using Orders.Domain;
 
-namespace Orders.Applications.Handlers.Queries.GetOrders;
+namespace Orders.Application.Handlers.Queries.GetOrders;
 
 public class GetOrdersQueryHandler : BaseCashedForUserQuery<GetOrdersQuery, BaseListDto<GetOrderDto>>
 {
@@ -17,7 +17,11 @@ public class GetOrdersQueryHandler : BaseCashedForUserQuery<GetOrdersQuery, Base
 
     private readonly IMapper _mapper;
 
-    public GetOrdersQueryHandler(IBaseReadRepository<Order> orders, ICurrentUserService currentUserService, IMapper mapper, OrdersListMemoryCache cache) : base(cache, currentUserService.CurrentUserId!.Value)
+    public GetOrdersQueryHandler(
+        IBaseReadRepository<Order> orders,
+        ICurrentUserService currentUserService,
+        IMapper mapper,
+        IOrdersListMemoryCache cache) : base(cache, currentUserService.CurrentUserId!.Value)
     {
         _orders = orders;
         _currentUserService = currentUserService;

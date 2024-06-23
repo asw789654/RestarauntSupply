@@ -1,7 +1,7 @@
 using Core.Application.ValidatorsExtensions;
 using FluentValidation;
 
-namespace Orders.Applications.Handlers.Commands.UpdateOrder;
+namespace Orders.Application.Handlers.Commands.UpdateOrder;
 
 internal class UpdateOrderCommandValidator : AbstractValidator<UpdateOrderCommand>
 {

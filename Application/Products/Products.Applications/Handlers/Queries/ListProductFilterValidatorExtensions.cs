@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Products.Applications.Handlers.Queries;
+namespace Products.Application.Handlers.Queries;
 
 internal class BaseListProductFilterValidator : AbstractValidator<ListProductFilter>
 {

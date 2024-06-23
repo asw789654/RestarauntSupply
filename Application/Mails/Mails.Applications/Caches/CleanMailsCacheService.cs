@@ -1,17 +1,17 @@
-namespace Mails.Applications.Caches;
+namespace Mails.Application.Caches;
 
 internal class CleanMailsCacheService : ICleanMailsCacheService
 {
-    private readonly MailsMemoryCache _productMemoryCache;
+    private readonly IMailsMemoryCache _productMemoryCache;
 
-    private readonly MailsListMemoryCache _mailsListMemoryCache;
+    private readonly IMailsListMemoryCache _mailsListMemoryCache;
 
-    private readonly MailsCountMemoryCache _mailsCountMemoryCache;
+    private readonly IMailsCountMemoryCache _mailsCountMemoryCache;
 
     public CleanMailsCacheService(
-        MailsMemoryCache productMemoryCache,
-        MailsListMemoryCache mailsListMemoryCache,
-        MailsCountMemoryCache mailsCountMemoryCache)
+        IMailsMemoryCache productMemoryCache,
+        IMailsListMemoryCache mailsListMemoryCache,
+        IMailsCountMemoryCache mailsCountMemoryCache)
     {
         _productMemoryCache = productMemoryCache;
         _mailsListMemoryCache = mailsListMemoryCache;

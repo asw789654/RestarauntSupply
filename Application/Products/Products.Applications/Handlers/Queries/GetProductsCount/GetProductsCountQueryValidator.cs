@@ -1,6 +1,7 @@
 using FluentValidation;
+using Products.Application.Handlers.Queries;
 
-namespace Products.Applications.Handlers.Queries.GetProductsCount;
+namespace Products.Application.Handlers.Queries.GetProductsCount;
 
 internal class GetProductsCountQueryValidator : AbstractValidator<GetProductsCountQuery>
 {

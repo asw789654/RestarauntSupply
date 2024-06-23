@@ -8,7 +8,8 @@ using Core.Auth.Api;
 using Core.Auth.Application;
 using Core.Auth.Application.Middlewares;
 using Infrastructure.Persistence;
-using Products.Applications;
+using Products.Application;
+using Infrastructure.DistributedCache;
 
 try
 {
@@ -36,7 +37,8 @@ try
         .AddPersistenceServices(builder.Configuration)
         .AddCoreAuthServices()
         .AddAllCors()
-        .AddProductsApplication();
+        .AddProductsApplication()
+        .AddDistributedCacheServices(builder.Configuration);
 
     var app = builder.Build();
 

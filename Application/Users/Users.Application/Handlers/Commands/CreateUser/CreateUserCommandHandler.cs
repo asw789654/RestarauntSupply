@@ -1,12 +1,10 @@
 using AutoMapper;
-using Core.Application.Abstractions.Persistence;
 using Core.Application.Abstractions.Persistence.Repository.Writing;
 using Core.Application.Exceptions;
 using Core.Auth.Application.Utils;
 using Core.Users.Domain;
 using Core.Users.Domain.Enums;
 using MediatR;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Users.Application.Caches;
 using Users.Application.Dtos;
@@ -18,17 +16,17 @@ internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Get
     private readonly IBaseWriteRepository<ApplicationUser> _users;
 
     private readonly IMapper _mapper;
-    
-    private readonly ApplicationUsersListMemoryCache _listCache;
-    
+
+    private readonly IApplicationUsersListMemoryCache _listCache;
+
     private readonly ILogger<CreateUserCommandHandler> _logger;
 
-    private readonly ApplicationUsersCountMemoryCache _countCache;
+    private readonly IApplicationUsersCountMemoryCache _countCache;
 
     public CreateUserCommandHandler(IBaseWriteRepository<ApplicationUser> users, IMapper mapper,
-        ApplicationUsersListMemoryCache listCache,
+        IApplicationUsersListMemoryCache listCache,
         ILogger<CreateUserCommandHandler> logger,
-        ApplicationUsersCountMemoryCache countCache)
+        IApplicationUsersCountMemoryCache countCache)
     {
         _users = users;
         _mapper = mapper;
@@ -60,12 +58,12 @@ internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Get
         };
 
         user = await _users.AddAsync(user, cancellationToken);
-        
+
         _listCache.Clear();
         _countCache.Clear();
-        
+
         _logger.LogInformation($"New user {user.ApplicationUserId} created.");
-        
+
         return _mapper.Map<GetUserDto>(user);
     }
 }

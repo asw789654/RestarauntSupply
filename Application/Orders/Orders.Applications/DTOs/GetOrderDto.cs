@@ -1,7 +1,7 @@
 using Core.Application.Abstractions.Mappings;
 using Orders.Domain;
 
-namespace Orders.Applications.DTOs;
+namespace Orders.Application.DTOs;
 
 public class GetOrderDto : IMapFrom<Order>
 {

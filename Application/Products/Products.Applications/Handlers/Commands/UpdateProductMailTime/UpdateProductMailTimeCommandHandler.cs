@@ -5,11 +5,11 @@ using Core.Auth.Application.Abstractions.Service;
 using Core.Auth.Application.Exceptions;
 using Core.Users.Domain.Enums;
 using MediatR;
-using Products.Applications.Caches;
-using Products.Applications.DTOs;
 using Core.Products.Domain;
+using Products.Application.Caches;
+using Products.Application.DTOs;
 
-namespace Products.Applications.Handlers.Commands.UpdateProductMailTime;
+namespace Products.Application.Handlers.Commands.UpdateProductMailTime;
 
 internal class UpdateProductMailTimeCommandHandler : IRequestHandler<UpdateProductMailTimeCommand, GetProductDto>
 {

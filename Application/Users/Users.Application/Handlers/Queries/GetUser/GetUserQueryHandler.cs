@@ -1,5 +1,4 @@
 using AutoMapper;
-using Core.Application.Abstractions.Persistence;
 using Core.Application.Abstractions.Persistence.Repository.Read;
 using Core.Application.BaseRealizations;
 using Core.Application.Exceptions;
@@ -14,9 +13,9 @@ internal class GetUserQueryHandler : BaseCashedQuery<GetUserQuery, GetUserDto>
     private readonly IBaseReadRepository<ApplicationUser> _users;
 
     private readonly IMapper _mapper;
-    
 
-    public GetUserQueryHandler(IBaseReadRepository<ApplicationUser> users, IMapper mapper, ApplicationUserMemoryCache cache) : base(cache)
+
+    public GetUserQueryHandler(IBaseReadRepository<ApplicationUser> users, IMapper mapper, IApplicationUsersMemoryCache cache) : base(cache)
     {
         _users = users;
         _mapper = mapper;

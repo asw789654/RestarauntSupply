@@ -1,8 +1,8 @@
 using Core.Auth.Application.Attributes;
 using MediatR;
-using Products.Applications.DTOs;
+using Products.Application.DTOs;
 
-namespace Products.Applications.Handlers.Commands.CreateProduct;
+namespace Products.Application.Handlers.Commands.CreateProduct;
 
 [RequestAuthorize]
 public class CreateProductCommand : IRequest<GetProductDto>

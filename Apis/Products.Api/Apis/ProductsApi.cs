@@ -4,17 +4,17 @@ using Core.Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Products.Applications.DTOs;
-using Products.Applications.Handlers.Commands.CreateProduct;
-using Products.Applications.Handlers.Commands.DeleteProduct;
-using Products.Applications.Handlers.Commands.SpendProduct;
-using Products.Applications.Handlers.Commands.UpdateProduct;
-using Products.Applications.Handlers.Commands.UpdateProductDelivered;
-using Products.Applications.Handlers.Commands.UpdateProductMailTime;
-using Products.Applications.Handlers.Queries.CheckProductsSpoilTime;
-using Products.Applications.Handlers.Queries.GetProduct;
-using Products.Applications.Handlers.Queries.GetProducts;
-using Products.Applications.Handlers.Queries.GetProductsCount;
+using Products.Application.DTOs;
+using Products.Application.Handlers.Commands.CreateProduct;
+using Products.Application.Handlers.Commands.SpendProduct;
+using Products.Application.Handlers.Commands.UpdateProduct;
+using Products.Application.Handlers.Queries.CheckProductsSpoilTime;
+using Products.Application.Handlers.Queries.GetProducts;
+using Products.Application.Handlers.Queries.GetProductsCount;
+using Products.Application.Handlers.Commands.DeleteProduct;
+using Products.Application.Handlers.Commands.UpdateProductDelivered;
+using Products.Application.Handlers.Commands.UpdateProductMailTime;
+using Products.Application.Handlers.Queries.GetProduct;
 
 namespace Products.Api.Apis;
 

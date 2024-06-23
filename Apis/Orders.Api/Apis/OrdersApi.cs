@@ -4,14 +4,14 @@ using Core.Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Orders.Applications.DTOs;
-using Orders.Applications.Handlers.Commands.CancelOrder;
-using Orders.Applications.Handlers.Commands.CreateOrder;
-using Orders.Applications.Handlers.Commands.UpdateOrder;
-using Orders.Applications.Handlers.Commands.UpdateOrderStatus;
-using Orders.Applications.Handlers.Queries.GetOrder;
-using Orders.Applications.Handlers.Queries.GetOrders;
-using Orders.Applications.Handlers.Queries.GetOrdersCount;
+using Orders.Application.DTOs;
+using Orders.Application.Handlers.Commands.CancelOrder;
+using Orders.Application.Handlers.Commands.CreateOrder;
+using Orders.Application.Handlers.Commands.UpdateOrder;
+using Orders.Application.Handlers.Commands.UpdateOrderStatus;
+using Orders.Application.Handlers.Queries.GetOrders;
+using Orders.Application.Handlers.Queries.GetOrdersCount;
+using Orders.Application.Handlers.Queries.GetOrder;
 
 namespace Orders.Api.Apis;
 
