@@ -1,8 +1,8 @@
-# TodosItAcadProject
+# ProductsSupply
 
 ## Introduction
 
-Application for manage Todo list by using modern approaches to development on the ASP.NET platform .
+Application for manage products шт restaraunt's by using modern approaches to development on the ASP.NET platform .
 
 ## Architecture design patterns used
 
@@ -10,7 +10,7 @@ Application for manage Todo list by using modern approaches to development on th
 - Command
 - Command query responsibility segregation
 - Mediator
-- Onion
+- Microservices
 - Repository
 - Chain of responsibility
 - Write-through cache
@@ -37,22 +37,35 @@ Application for manage Todo list by using modern approaches to development on th
 - Core.Application - Core business logic abstractions and realizations 
 - Core.Api - Common middlewares and api services configuration
 - Core.Auth.Application - Common auth business logic abstractions and realizations
-- Core.Auth.Api - Common auth realizations abstractions and realizations for Api projects
-
+- Core.Products.Domain - Product entity
+- Core.Storages.Domain - Storage and Storage types entity
 
 #### Application/Users
 
 - Users.Application - Users management business logic
 
-#### Application/Todos
+#### Application/Mails
 
-- Todos.Domain - Todos entities
-- Todos.Applications - Todos management business logic
+- Mails.Domain - Mails entities
+- Mails.Applications - Mails management business logic
 
 #### Application/Auth
 
 - Auth.Domain - Auth entities
 - Auth.Application - Auth business logic
+
+#### Application/Orders
+
+- Orders.Domain - Orders entities
+- Orders.Application - Orders business logic
+
+#### Application/Products
+
+- Products.Application - Products business logic
+
+#### Application/Storages
+
+- Storages.Application - Storages business logic
 
 ### Infrastructure
 
@@ -61,12 +74,15 @@ Application for manage Todo list by using modern approaches to development on th
 ### Apis
 
 - Users.Api - Users management API
-- Todos.Api - Todos management API
+- Storages.Api - Storages management API
+- Products.Api - Products management API
+- Orders.Api - Orders management API
+- Mails.Api - Mails management API
 - Auth.Api - Auth API
 
 ### Tests
 
-- Todos.UnitTests - Unit test for Todos.Applications
+- Products.UnitTests - Unit test for Todos.Applications
 - Users.UnitTests - Unit test for Users.Applications
 - Auth.UnitTests  - Unit test for Auth.Applications
 
@@ -77,25 +93,26 @@ Application for manage Todo list by using modern approaches to development on th
 
 ##  Configurations
 
-### Users, Todos
+### Users, Products, Orders, Mails, Storages
 
 ```
 {
   "ConnectionStrings": {
-    "DefaultConnection": "" //Connection string to SQL server DB
+    "DefaultConnection": "Host=localhost;Port=5432;Database=RestarauntDb;Username=postgres;Password=789654",
+    "Redis": "localhost:6379"
   },
   "Logging": {
     "LogLevel": {
       "Default": "Information",
       "Microsoft.AspNetCore": "Warning"
     },
-    "LogsFolder": "" //Path to log folder
+    "LogsFolder": "Logs/"
   },
   "AllowedHosts": "*",
   "Jwt": {
-    "Key": "", // JWT key
-    "Issuer": "Todos",
-    "Audience": "Todos"
+    "Key": "sdversdfregsgdsgfsdfwesdfsdfsdfsf",
+    "Issuer": "Products",
+    "Audience": "Products"
   }
 }
 ```
@@ -105,24 +122,25 @@ Application for manage Todo list by using modern approaches to development on th
 ```
 {
   "ConnectionStrings": {
-    "DefaultConnection": "" //Connection string to SQL server DB
+    "DefaultConnection": "Host=localhost;Port=5432;Database=RestarauntDb;Username=postgres;Password=789654",
+    "Redis": "localhost:6379"
   },
   "Logging": {
     "LogLevel": {
       "Default": "Information",
       "Microsoft.AspNetCore": "Warning"
     },
-    "LogsFolder": "" //Path to log folder
+    "LogsFolder": "Logs/"
   },
   "AllowedHosts": "*",
   "Jwt": {
-    "Key": "", // JWT key
-    "Issuer": "Todos",
-    "Audience": "Todos"
+    "Key": "sdversdfregsgdsgfsdfwesdfsdfsdfsf",
+    "Issuer": "Products",
+    "Audience": "Products"
   },
   "TokensLifeTime": {
-    "JwtToken" : 300, //Life time of JWT token in seconds
-    "RefreshToken" : 72000  //Life time of refresh token in seconds
+    "JwtToken" : 300,
+    "RefreshToken" : 72000
   }
 }
 ```
