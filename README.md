@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Application for manage products шт restaraunt's by using modern approaches to development on the ASP.NET platform .
+Application for manage products in restaraunt by using modern approaches to development on the ASP.NET platform .
 
 ## Architecture design patterns used
 
