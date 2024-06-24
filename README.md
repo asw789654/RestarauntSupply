@@ -10,7 +10,7 @@ Application for manage products шт restaraunt's by using modern approaches to 
 - Command
 - Command query responsibility segregation
 - Mediator
-- Microservices
+- Onion
 - Repository
 - Chain of responsibility
 - Write-through cache
