@@ -1,6 +1,5 @@
 using Core.Application.Abstractions.Mappings;
 using Core.Auth.Application.Attributes;
-using Core.Products.Domain;
 using Core.Storages.Domain;
 using MediatR;
 using Storages.Application.DTOs;

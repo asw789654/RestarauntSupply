@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Products.Application.DTOs;
+using Products.Application.Handlers.Commands.AddProductToStorage;
 using Products.Application.Handlers.Commands.CheckProductsSpoilTime;
 using Products.Application.Handlers.Commands.CreateProduct;
 using Products.Application.Handlers.Commands.DeleteProduct;
@@ -112,6 +113,13 @@ public class ProductsApi : IApi
             .WithSummary("Update MailTime")
             .RequireAuthorization()
             .Produces<GetProductDto>();
+
+        app.MapPut($"{_apiUrl}/AddToStorage/{{id}}", AddProductToStorage)
+            .WithTags(Tag)
+            .WithOpenApi()
+            .WithSummary("Add Product to Storage")
+            .RequireAuthorization()
+            .Produces<GetProductDto>();
         //ChangeVolumeProductCommand
         #endregion
     }
@@ -199,6 +207,17 @@ public class ProductsApi : IApi
         var command = new UpdateProductMailTimeCommand()
         {
             ProductId = id
+        };
+        return mediator.Send(command, cancellationToken);
+    }
+
+    private static Task<GetProductDto> AddProductToStorage([FromServices] IMediator mediator,[FromBody] AddProductToStorageCommand query,
+        CancellationToken cancellationToken)
+    {
+        var command = new AddProductToStorageCommand()
+        {
+            ProductId = query.ProductId,
+            StorageId = query.StorageId
         };
         return mediator.Send(command, cancellationToken);
     }

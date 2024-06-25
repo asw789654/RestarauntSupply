@@ -1,5 +1,4 @@
 using Core.Auth.Application.Attributes;
-using Core.Products.Domain;
 using MediatR;
 using Storages.Application.DTOs;
 
@@ -14,7 +13,4 @@ public class CreateStorageCommand : IRequest<GetStorageDto>
     public int Capacity { get; set; }
 
     public int StorageTypeId { get; set; }
-
-    public ICollection<Product> Products { get; set; } = default!;
-
 }

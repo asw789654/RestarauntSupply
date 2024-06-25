@@ -19,5 +19,7 @@ public class GetProductDto : IMapFrom<Product>
 
     public DateTime? SpoilTime { get; set; }
 
+    public int StoragId {  get; set; }
+    
     public int StorageTypeId { get; set; }
 }

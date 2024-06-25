@@ -9,7 +9,7 @@ using Core.Users.Domain.Enums;
 using Storages.Application.Caches;
 using Storages.Application.DTOs;
 
-namespace Storages.Application.Handlers.Queries.GetStorageWithProduct;
+namespace Storages.Application.Handlers.Queries.GetStorage;
 
 internal class GetStorageQueryHandler : BaseCashedForUserQuery<GetStorageQuery, GetStorageDto>
 {

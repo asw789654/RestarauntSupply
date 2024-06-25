@@ -19,9 +19,9 @@ public class MqService : IMqService
     {
         var factory = new ConnectionFactory
         {
-            HostName = "localhost",
-            UserName = "guest",
-            Password = "guest"
+            HostName = _configuration["MqService:HostName"],
+            UserName = _configuration["MqService:UserName"],
+            Password = _configuration["MqService:Password"]
         };
         using var connection = factory.CreateConnection();
         using var channel = connection.CreateModel();
