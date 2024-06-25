@@ -1,10 +1,9 @@
-using System.Data;
-using System.Net;
 using Core.Application.Abstractions;
 using Core.Users.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using Users.Application.Dtos;
 using Users.Application.Handlers.Commands.CreateUser;
 using Users.Application.Handlers.Commands.DeleteUser;
@@ -64,7 +63,7 @@ public class UsersApi : IApi
             .WithOpenApi()
             .WithSummary("Get users count")
             .Produces<int>()
-            .RequireAuthorization(AuthorizationPoliciesEnum.AdminGreetings.ToString());;
+            .RequireAuthorization(AuthorizationPoliciesEnum.AdminGreetings.ToString()); ;
 
         #endregion
 
@@ -82,7 +81,7 @@ public class UsersApi : IApi
             .WithSummary("Update user")
             .RequireAuthorization()
             .Produces<GetUserDto>();
-        
+
         app.MapPatch($"{_apiUrl}/{{id}}/Password", PatchUserPassword)
             .WithTags(Tag)
             .WithOpenApi()

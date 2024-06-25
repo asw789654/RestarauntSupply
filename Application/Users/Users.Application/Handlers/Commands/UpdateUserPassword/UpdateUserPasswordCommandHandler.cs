@@ -30,6 +30,12 @@ internal class UpdateUserPasswordCommandHandler : IRequestHandler<UpdateUserPass
     
     public async Task Handle(UpdateUserPasswordCommand request, CancellationToken cancellationToken)
     {
+
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin)||
+            !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
+        {
+            throw new ForbiddenException();
+        }
         var userId = Guid.Parse(request.UserId);
         var user = await _users.AsAsyncRead()
             .SingleOrDefaultAsync(u => u.ApplicationUserId == userId, cancellationToken);
@@ -37,12 +43,6 @@ internal class UpdateUserPasswordCommandHandler : IRequestHandler<UpdateUserPass
         if (user is null)
         {
             throw new NotFoundException(request);
-        }
-        
-        if (_currentUserService.CurrentUserId != userId &&
-            !_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
-        {
-            throw new ForbiddenException();
         }
 
         var newPasswordHash = PasswordHashUtil.Hash(request.Password);

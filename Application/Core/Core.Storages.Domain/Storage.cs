@@ -1,5 +1,3 @@
-using Core.Products.Domain;
-
 namespace Core.Storages.Domain;
 
 public class Storage
@@ -12,6 +10,4 @@ public class Storage
     public int StorageTypeId { get; set; }
 
     public StorageType StorageType { get; set; } = default!;
-
-    public ICollection<Product> Products { get; } = new List<Product>();
 }

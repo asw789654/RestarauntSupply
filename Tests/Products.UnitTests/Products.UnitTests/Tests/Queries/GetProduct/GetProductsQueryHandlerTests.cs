@@ -7,9 +7,9 @@ using Core.Products.Domain;
 using Core.Tests;
 using Core.Tests.Fixtures;
 using Core.Users.Domain.Enums;
-using Infrastructure.DistributedCache.Products;
 using MediatR;
 using Moq;
+using Products.Application.Caches;
 using Products.Application.DTOs;
 using Products.Application.Handlers.Queries.GetProducts;
 using System.Linq.Expressions;
@@ -23,7 +23,7 @@ public class GetProductsQueryHandlerTests : RequestHandlerTestBase<GetProductsQu
 
     private readonly Mock<ICurrentUserService> _currentUserMok = new();
 
-    private readonly Mock<ProductsListMemoryCache> _mockProductsMemoryCache = new();
+    private readonly Mock<IProductsListMemoryCache> _mockProductsMemoryCache = new();
 
     private readonly IMapper _mapper;
 

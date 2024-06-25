@@ -8,4 +8,6 @@ public class CreateUserCommand : IRequest<GetUserDto>
     public string Login { get; init; } = default!;
 
     public string Password { get; init; } = default!;
+
+    public string? MailAddress { get; set; }
 }

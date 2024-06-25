@@ -1,15 +1,15 @@
-using System.Reflection;
-using Serilog;
-using Serilog.Events;
 using Core.Api;
 using Core.Api.Middlewares;
 using Core.Application;
 using Core.Auth.Api;
 using Core.Auth.Application;
 using Core.Auth.Application.Middlewares;
+using Infrastructure.DistributedCache;
 using Infrastructure.Persistence;
 using Orders.Application;
-using Infrastructure.DistributedCache;
+using Serilog;
+using Serilog.Events;
+using System.Reflection;
 
 try
 {

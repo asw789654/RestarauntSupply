@@ -32,16 +32,17 @@ internal class GetOrderQueryHandler : BaseCashedForUserQuery<GetOrderQuery, GetO
 
     public override async Task<GetOrderDto> SentQueryAsync(GetOrderQuery request, CancellationToken cancellationToken)
     {
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) ||
+            !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
+        {
+            throw new ForbiddenException();
+        }
+
         var orderId = Guid.Parse(request.OrderId);
         var order = await _orders.AsAsyncRead().SingleOrDefaultAsync(e => e.OrderId == orderId, cancellationToken);
         if (order is null)
         {
             throw new NotFoundException(request);
-        }
-
-        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
-        {
-            throw new ForbiddenException();
         }
 
         return _mapper.Map<GetOrderDto>(order);

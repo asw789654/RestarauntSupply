@@ -1,20 +1,20 @@
-using System.Net;
 using Core.Application.Abstractions;
 using Core.Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Products.Application.DTOs;
+using Products.Application.Handlers.Commands.CheckProductsSpoilTime;
 using Products.Application.Handlers.Commands.CreateProduct;
+using Products.Application.Handlers.Commands.DeleteProduct;
 using Products.Application.Handlers.Commands.SpendProduct;
 using Products.Application.Handlers.Commands.UpdateProduct;
-using Products.Application.Handlers.Queries.CheckProductsSpoilTime;
-using Products.Application.Handlers.Queries.GetProducts;
-using Products.Application.Handlers.Queries.GetProductsCount;
-using Products.Application.Handlers.Commands.DeleteProduct;
 using Products.Application.Handlers.Commands.UpdateProductDelivered;
 using Products.Application.Handlers.Commands.UpdateProductMailTime;
 using Products.Application.Handlers.Queries.GetProduct;
+using Products.Application.Handlers.Queries.GetProducts;
+using Products.Application.Handlers.Queries.GetProductsCount;
+using System.Net;
 
 namespace Products.Api.Apis;
 
@@ -137,10 +137,10 @@ public class ProductsApi : IApi
     {
         var result = await mediator.Send(query, cancellationToken);
         //httpContext.Response.Headers.Append("X-Total-Count", result.TotalCount.ToString());
-        return result.Items; 
+        return result.Items;
     }
 
-    private static async Task<GetProductDto[]> GetSpoiledProducts(HttpContext httpContext, [FromServices] IMediator mediator, [AsParameters] CheckProductsSpoilTimeQuery query,
+    private static async Task<GetProductDto[]> GetSpoiledProducts(HttpContext httpContext, [FromServices] IMediator mediator, [AsParameters] CheckProductsSpoilTimeCommand query,
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(query, cancellationToken);
@@ -189,7 +189,7 @@ public class ProductsApi : IApi
     {
         var command = new UpdateProductDeliveredCommand()
         {
-            ProductId = id           
+            ProductId = id
         };
         return mediator.Send(command, cancellationToken);
     }

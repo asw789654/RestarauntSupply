@@ -1,3 +1,4 @@
+using AutoMapper;
 using Core.Application.Abstractions.Persistence.Repository.Writing;
 using Core.Application.Exceptions;
 using Core.Auth.Application.Abstractions.Service;
@@ -6,28 +7,33 @@ using Core.Storages.Domain;
 using Core.Users.Domain.Enums;
 using MediatR;
 using Storages.Application.Caches;
+using Storages.Application.DTOs;
 
-namespace Storages.Application.Handlers.Commands.DeleteStorage;
+namespace Storages.Application.Handlers.Commands.AddProductToStorage;
 
-internal class DeleteStorageCommandHandler : IRequestHandler<DeleteStorageCommand, Unit>
+internal class AddProductToStorageCommandHandler : IRequestHandler<AddProductToStorageCommand, GetStorageDto>
 {
     private readonly IBaseWriteRepository<Storage> _storages;
+
+    private readonly IMapper _mapper;
 
     private readonly ICurrentUserService _currentUserService;
 
     private readonly ICleanStoragesCacheService _cleanStoragesCacheService;
 
-    public DeleteStorageCommandHandler(IBaseWriteRepository<Storage> storages,
-        ICurrentUserService currentUserService, ICleanStoragesCacheService cleanStoragesCacheService)
+    public AddProductToStorageCommandHandler(IBaseWriteRepository<Storage> storages, IMapper mapper, ICurrentUserService currentUserService, ICleanStoragesCacheService cleanStoragesCacheService)
     {
         _storages = storages;
+        _mapper = mapper;
         _currentUserService = currentUserService;
         _cleanStoragesCacheService = cleanStoragesCacheService;
     }
 
-    public async Task<Unit> Handle(DeleteStorageCommand request, CancellationToken cancellationToken)
+    public async Task<GetStorageDto> Handle(AddProductToStorageCommand request, CancellationToken cancellationToken)
     {
-        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
+
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin)||
+            !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
         {
             throw new ForbiddenException();
         }
@@ -38,8 +44,9 @@ internal class DeleteStorageCommandHandler : IRequestHandler<DeleteStorageComman
             throw new NotFoundException(request);
         }
 
-        await _storages.RemoveAsync(storage, cancellationToken);
+        _mapper.Map(request, storage);
+        storage = await _storages.UpdateAsync(storage, cancellationToken);
         _cleanStoragesCacheService.ClearAllCaches();
-        return default;
+        return _mapper.Map<GetStorageDto>(storage);
     }
 }

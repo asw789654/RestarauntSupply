@@ -2,7 +2,10 @@ using AutoMapper;
 using Core.Application.Abstractions.Persistence.Repository.Read;
 using Core.Application.BaseRealizations;
 using Core.Application.DTOs;
+using Core.Auth.Application.Abstractions.Service;
+using Core.Auth.Application.Exceptions;
 using Core.Users.Domain;
+using Core.Users.Domain.Enums;
 using Users.Application.Caches;
 using Users.Application.Dtos;
 
@@ -14,17 +17,26 @@ internal class GetUsersMailsQueryHandler : BaseCashedQuery<GetUsersMailsQuery, B
 
     private readonly IMapper _mapper;
 
+    private readonly ICurrentUserService _currentUserService;
+
     public GetUsersMailsQueryHandler(
         IBaseReadRepository<ApplicationUser> users, 
         IMapper mapper, 
+        ICurrentUserService currentUserService,
         IApplicationUsersMailListMemoryCache cache) : base(cache)
     {
+        _currentUserService = currentUserService;
         _users = users;
         _mapper = mapper;
     }
 
     public override async Task<BaseListDto<GetUserMailDto>> SentQueryAsync(GetUsersMailsQuery request, CancellationToken cancellationToken)
     {
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
+        {
+            throw new ForbiddenException();
+        }
+
         var query = _users.AsQueryable().Where(ListWhere.Where(request));
 
         if (request.Offset.HasValue)

@@ -1,13 +1,13 @@
-using System.Linq.Expressions;
 using AutoFixture;
 using AutoMapper;
 using Core.Application.Abstractions.Persistence.Repository.Read;
 using Core.Tests;
 using Core.Tests.Fixtures;
 using Core.Users.Domain;
-using Infrastructure.DistributedCache.Users;
 using MediatR;
 using Moq;
+using System.Linq.Expressions;
+using Users.Application.Caches;
 using Users.Application.Dtos;
 using Users.Application.Handlers.Queries.GetUser;
 using Xunit.Abstractions;
@@ -17,9 +17,9 @@ namespace Users.UnitTests.Tests.Queries.GetUser;
 public class GetUserQueryHandlerTests : RequestHandlerTestBase<GetUserQuery, GetUserDto>
 {
     private readonly Mock<IBaseReadRepository<ApplicationUser>> _usersMok = new();
-    
-    private readonly Mock<ApplicationUserMemoryCache> _mockUserMemoryCache = new();
-    
+
+    private readonly Mock<IApplicationUsersMemoryCache> _mockUserMemoryCache = new();
+
     private readonly IMapper _mapper;
 
     public GetUserQueryHandlerTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
@@ -29,7 +29,7 @@ public class GetUserQueryHandlerTests : RequestHandlerTestBase<GetUserQuery, Get
 
     protected override IRequestHandler<GetUserQuery, GetUserDto> CommandHandler =>
         new GetUserQueryHandler(_usersMok.Object, _mapper, _mockUserMemoryCache.Object);
-    
+
     [Fact]
     public async Task Should_BeValid_When_UserFounded()
     {
@@ -39,10 +39,10 @@ public class GetUserQueryHandlerTests : RequestHandlerTestBase<GetUserQuery, Get
         {
             Id = userId.ToString()
         };
-        
+
         var user = TestFixture.Build<ApplicationUser>().Create();
         user.ApplicationUserId = userId;
-        
+
         _usersMok
             .Setup(p =>
                 p.AsAsyncRead().SingleOrDefaultAsync(It.IsAny<Expression<Func<ApplicationUser, bool>>>(), default)
@@ -51,7 +51,7 @@ public class GetUserQueryHandlerTests : RequestHandlerTestBase<GetUserQuery, Get
         // act and assert
         await AssertNotThrow(query);
     }
-    
+
     [Fact]
     public async Task Should_ThrowNotFound_When_UserNotFound()
     {
@@ -60,7 +60,7 @@ public class GetUserQueryHandlerTests : RequestHandlerTestBase<GetUserQuery, Get
         {
             Id = Guid.NewGuid().ToString()
         };
-        
+
         _usersMok
             .Setup(p =>
                 p.AsAsyncRead().SingleOrDefaultAsync(It.IsAny<Expression<Func<ApplicationUser, bool>>>(), default)

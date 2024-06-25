@@ -11,5 +11,7 @@ public class ProductTypeConfiguration : IEntityTypeConfiguration<Product>
         builder.HasKey(e => e.ProductId);
 
         builder.Property(e => e.Name).HasMaxLength(50).IsRequired();
+
+        builder.HasOne(e => e.Storage).WithMany().HasForeignKey(e => e.StorageId);
     }
 }

@@ -5,6 +5,8 @@ using MediatR;
 using Core.Products.Domain;
 using Products.Application.Caches;
 using Products.Application.DTOs;
+using Core.Auth.Application.Exceptions;
+using Core.Users.Domain.Enums;
 
 namespace Products.Application.Handlers.Commands.CreateProduct;
 
@@ -28,6 +30,11 @@ internal class CreateProductCommandHandler : IRequestHandler<CreateProductComman
 
     public async Task<GetProductDto> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
+        {
+            throw new ForbiddenException();
+        }
+
         var product = new Product
         {
             Name = request.Name,

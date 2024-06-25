@@ -1,7 +1,4 @@
-using System.Reflection;
 using Auth.Application;
-using Serilog;
-using Serilog.Events;
 using Core.Api;
 using Core.Api.Middlewares;
 using Core.Application;
@@ -9,13 +6,16 @@ using Core.Auth.Api;
 using Core.Auth.Application;
 using Core.Auth.Application.Middlewares;
 using Infrastructure.Persistence;
+using Serilog;
+using Serilog.Events;
+using System.Reflection;
 
 try
 {
     const string appPrefix = "auth";
     const string version = "v1";
     const string appName = "Auth API v1";
-    
+
     var builder = WebApplication.CreateBuilder(args);
 
     builder.Host.UseSerilog((ctx, lc) => lc
@@ -28,9 +28,9 @@ try
             rollingInterval: RollingInterval.Day, retainedFileCountLimit: 14, buffered: true)
         .WriteTo.File($"{builder.Configuration["Logging:LogsFolder"]}/Error-.txt", LogEventLevel.Error,
             rollingInterval: RollingInterval.Day, retainedFileCountLimit: 30, buffered: true));
-    
+
     builder.Services
-        .AddSwaggerWidthJwtAuth(Assembly.GetExecutingAssembly(), appName, version, appName )
+        .AddSwaggerWidthJwtAuth(Assembly.GetExecutingAssembly(), appName, version, appName)
         .AddCoreApiServices()
         .AddCoreApplicationServices()
         .AddCoreAuthApiServices(builder.Configuration)
@@ -44,9 +44,9 @@ try
         });
 
     var app = builder.Build();
-    
+
     app.RunDbMigrations().RegisterApis(Assembly.GetExecutingAssembly(), $"{appPrefix}/api/{version}");
-    
+
     app.UseCoreExceptionHandler()
         .UseAuthExceptionHandler()
         .UseSwagger(c => { c.RouteTemplate = appPrefix + "/swagger/{documentname}/swagger.json"; })
@@ -58,7 +58,7 @@ try
         .UseAuthentication()
         .UseAuthorization()
         .UseHttpsRedirection();
-    
+
     app.Run();
 }
 catch (Exception ex)

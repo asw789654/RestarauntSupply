@@ -3,7 +3,9 @@ using Core.Application.Abstractions.Persistence.Repository.Read;
 using Core.Application.BaseRealizations;
 using Core.Application.DTOs;
 using Core.Auth.Application.Abstractions.Service;
+using Core.Auth.Application.Exceptions;
 using Core.Storages.Domain;
+using Core.Users.Domain.Enums;
 using Storages.Application.Caches;
 using Storages.Application.DTOs;
 
@@ -29,6 +31,12 @@ public class GetStoragesQueryHandler : BaseCashedForUserQuery<GetStoragesQuery, 
 
     public override async Task<BaseListDto<GetStorageDto>> SentQueryAsync(GetStoragesQuery request, CancellationToken cancellationToken)
     {
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) ||
+            !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
+        {
+            throw new ForbiddenException();
+        }
+
         var query = _storages.AsQueryable();
 
         if (request.Offset.HasValue)

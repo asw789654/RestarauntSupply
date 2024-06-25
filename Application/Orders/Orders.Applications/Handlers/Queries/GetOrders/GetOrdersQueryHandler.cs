@@ -3,6 +3,8 @@ using Core.Application.Abstractions.Persistence.Repository.Read;
 using Core.Application.BaseRealizations;
 using Core.Application.DTOs;
 using Core.Auth.Application.Abstractions.Service;
+using Core.Auth.Application.Exceptions;
+using Core.Users.Domain.Enums;
 using Orders.Application.Caches;
 using Orders.Application.DTOs;
 using Orders.Domain;
@@ -30,6 +32,12 @@ public class GetOrdersQueryHandler : BaseCashedForUserQuery<GetOrdersQuery, Base
 
     public override async Task<BaseListDto<GetOrderDto>> SentQueryAsync(GetOrdersQuery request, CancellationToken cancellationToken)
     {
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) ||
+            !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
+        {
+            throw new ForbiddenException();
+        }
+
         var query = _orders.AsQueryable();
 
         if (request.Offset.HasValue)

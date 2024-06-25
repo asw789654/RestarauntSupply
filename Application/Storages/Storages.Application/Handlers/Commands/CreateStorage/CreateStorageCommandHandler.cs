@@ -1,7 +1,9 @@
 using AutoMapper;
 using Core.Application.Abstractions.Persistence.Repository.Writing;
 using Core.Auth.Application.Abstractions.Service;
+using Core.Auth.Application.Exceptions;
 using Core.Storages.Domain;
+using Core.Users.Domain.Enums;
 using MediatR;
 using Storages.Application.Caches;
 using Storages.Application.DTOs;
@@ -28,6 +30,11 @@ internal class CreateStorageCommandHandler : IRequestHandler<CreateStorageComman
 
     public async Task<GetStorageDto> Handle(CreateStorageCommand request, CancellationToken cancellationToken)
     {
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
+        {
+            throw new ForbiddenException();
+        }
+
         var storage = new Storage
         {
             Name = request.Name,

@@ -27,17 +27,17 @@ internal class DeleteProductCommandHandler : IRequestHandler<DeleteProductComman
 
     public async Task<Unit> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
+        {
+            throw new ForbiddenException();
+        }
+
         var productId = Guid.Parse(request.ProductId);
         var product = await _products.AsAsyncRead().SingleOrDefaultAsync(e => e.ProductId == productId, cancellationToken);
         if (product is null)
         {
             throw new NotFoundException(request);
-        }
-
-        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
-        {
-            throw new ForbiddenException();
-        }
+        }   
 
         await _products.RemoveAsync(product, cancellationToken);
         _cleanProductsCacheService.ClearAllCaches();

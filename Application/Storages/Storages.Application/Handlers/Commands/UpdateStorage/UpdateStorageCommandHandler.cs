@@ -31,15 +31,16 @@ internal class UpdateStorageCommandHandler : IRequestHandler<UpdateStorageComman
 
     public async Task<GetStorageDto> Handle(UpdateStorageCommand request, CancellationToken cancellationToken)
     {
-        var storage = await _storages.AsAsyncRead().SingleOrDefaultAsync(e => e.StorageId == request.StorageId, cancellationToken);
-        if (storage is null)
-        {
-            throw new NotFoundException(request);
-        }
 
         if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
         {
             throw new ForbiddenException();
+        }
+
+        var storage = await _storages.AsAsyncRead().SingleOrDefaultAsync(e => e.StorageId == request.StorageId, cancellationToken);
+        if (storage is null)
+        {
+            throw new NotFoundException(request);
         }
 
         _mapper.Map(request, storage);

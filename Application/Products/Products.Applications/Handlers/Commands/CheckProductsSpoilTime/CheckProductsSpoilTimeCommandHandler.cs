@@ -3,15 +3,17 @@ using Core.Application.Abstractions;
 using Core.Application.Abstractions.Persistence.Repository.Writing;
 using Core.Application.DTOs;
 using Core.Auth.Application.Abstractions.Service;
+using Core.Auth.Application.Exceptions;
 using Core.Products.Domain;
+using Core.Users.Domain.Enums;
 using MediatR;
 using Products.Application.Caches;
 using Products.Application.DTOs;
 using System.Text.Json;
 
-namespace Products.Application.Handlers.Queries.CheckProductsSpoilTime;
+namespace Products.Application.Handlers.Commands.CheckProductsSpoilTime;
 
-internal class CheckProductsSpoilTimeQueryHandler : IRequestHandler<CheckProductsSpoilTimeQuery, BaseListDto<GetProductDto>>
+internal class CheckProductsSpoilTimeCommandHandler : IRequestHandler<CheckProductsSpoilTimeCommand, BaseListDto<GetProductDto>>
 {
     private readonly IBaseWriteRepository<Product> _products;
 
@@ -23,7 +25,7 @@ internal class CheckProductsSpoilTimeQueryHandler : IRequestHandler<CheckProduct
 
     private readonly IMqService _mqService;
 
-    public CheckProductsSpoilTimeQueryHandler(
+    public CheckProductsSpoilTimeCommandHandler(
         IBaseWriteRepository<Product> products,
         IMapper mapper,
         ICurrentUserService currentUserService,
@@ -37,8 +39,14 @@ internal class CheckProductsSpoilTimeQueryHandler : IRequestHandler<CheckProduct
         _mqService = mqService;
     }
 
-    public async Task<BaseListDto<GetProductDto>> Handle(CheckProductsSpoilTimeQuery request, CancellationToken cancellationToken)
+    public async Task<BaseListDto<GetProductDto>> Handle(CheckProductsSpoilTimeCommand request, CancellationToken cancellationToken)
     {
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) ||
+            !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
+        {
+            throw new ForbiddenException();
+        }
+
         var query = _products.AsQueryable();
 
         query = query.OrderBy(e => e.ProductId);
@@ -55,9 +63,10 @@ internal class CheckProductsSpoilTimeQueryHandler : IRequestHandler<CheckProduct
             {
                 _mqService.SendMessage("spoiledProduct", JsonSerializer.Serialize(product));
                 product.MailTime = DateTime.UtcNow;
-
             }
         }
+
+        _cleanProductsCacheService.ClearListCaches();
 
         return new BaseListDto<GetProductDto>
         {

@@ -35,18 +35,27 @@ internal class SpendProductCommandHandler : IRequestHandler<SpendProductCommand,
 
     public async Task<GetProductDto> Handle(SpendProductCommand request, CancellationToken cancellationToken)
     {
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) ||
+            !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
+        {
+            throw new ForbiddenException();
+        }
+
         var productId = Guid.Parse(request.ProductId);
         var product = await _products.AsAsyncRead().SingleOrDefaultAsync(e => e.ProductId == productId, cancellationToken);
+
         if (product is null)
         {
             throw new NotFoundException(request);
         }
+        var result = product.Volume - request.Volume;
 
-        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
+        if (result < 0)
         {
-            throw new ForbiddenException();
+            throw new InvalidOperationException();
         }
-        request.Volume = product.Volume - request.Volume;
+
+        request.Volume = result;
         _mapper.Map(request, product);
         product = await _products.UpdateAsync(product, cancellationToken);
         _cleanProductsCacheService.ClearAllCaches();

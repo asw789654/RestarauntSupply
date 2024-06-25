@@ -1,6 +1,8 @@
 using Core.Application.Abstractions.Persistence.Repository.Read;
 using Core.Application.BaseRealizations;
 using Core.Auth.Application.Abstractions.Service;
+using Core.Auth.Application.Exceptions;
+using Core.Users.Domain.Enums;
 using Orders.Application.Caches;
 using Orders.Domain;
 
@@ -23,6 +25,17 @@ internal class GetOrdersCountQueryHandler : BaseCashedForUserQuery<GetOrdersCoun
 
     public override async Task<int> SentQueryAsync(GetOrdersCountQuery request, CancellationToken cancellationToken)
     {
-        return await _orders.AsAsyncRead().CountAsync(ListOrderWhere.WhereForAll(request), cancellationToken);
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
+        {
+            return await _orders.AsAsyncRead().CountAsync(ListOrderWhere.WhereForAll(request), cancellationToken);
+        }
+
+        else if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
+        {
+            var currentUserId = _currentUserService.CurrentUserId;
+            return await _orders.AsAsyncRead().CountAsync(ListOrderWhere.WhereForClient(request, currentUserId!.Value), cancellationToken);
+        }
+
+        throw new ForbiddenException();
     }
 }

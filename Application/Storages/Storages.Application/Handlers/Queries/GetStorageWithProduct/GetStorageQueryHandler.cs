@@ -9,7 +9,7 @@ using Core.Users.Domain.Enums;
 using Storages.Application.Caches;
 using Storages.Application.DTOs;
 
-namespace Storages.Application.Handlers.Queries.GetStorage;
+namespace Storages.Application.Handlers.Queries.GetStorageWithProduct;
 
 internal class GetStorageQueryHandler : BaseCashedForUserQuery<GetStorageQuery, GetStorageDto>
 {
@@ -29,15 +29,16 @@ internal class GetStorageQueryHandler : BaseCashedForUserQuery<GetStorageQuery, 
 
     public override async Task<GetStorageDto> SentQueryAsync(GetStorageQuery request, CancellationToken cancellationToken)
     {
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) ||
+            !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
+        {
+            throw new ForbiddenException();
+        }
+
         var storage = await _storages.AsAsyncRead().SingleOrDefaultAsync(e => e.StorageId == request.StorageId, cancellationToken);
         if (storage is null)
         {
             throw new NotFoundException(request);
-        }
-
-        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
-        {
-            throw new ForbiddenException();
         }
 
         return _mapper.Map<GetStorageDto>(storage);

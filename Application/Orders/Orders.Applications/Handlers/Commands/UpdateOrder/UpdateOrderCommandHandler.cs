@@ -31,17 +31,17 @@ internal class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, G
 
     public async Task<GetOrderDto> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
     {
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
+        {
+            throw new ForbiddenException();
+        }
+
         var orderId = Guid.Parse(request.OrderId);
         var order = await _orders.AsAsyncRead().SingleOrDefaultAsync(e => e.OrderId == orderId, cancellationToken);
         if (order is null)
         {
             throw new NotFoundException(request);
-        }
-
-        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
-        {
-            throw new ForbiddenException();
-        }
+        }       
 
         _mapper.Map(request, order);
         order = await _orders.UpdateAsync(order, cancellationToken);

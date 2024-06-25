@@ -23,35 +23,36 @@ internal class CancelOrderCommandHandler : IRequestHandler<CancelOrderCommand, G
 
     private readonly ICleanOrdersCacheService _cleanOrdersCacheService;
 
-    private readonly IMqService _mqService;
-
     public CancelOrderCommandHandler(
         IBaseWriteRepository<Order> orders,
         IMapper mapper,
         ICurrentUserService currentUserService,
-        ICleanOrdersCacheService cleanOrdersCacheService,
-        IMqService mqService)
+        ICleanOrdersCacheService cleanOrdersCacheService)
     {
         _orders = orders;
         _mapper = mapper;
         _currentUserService = currentUserService;
         _cleanOrdersCacheService = cleanOrdersCacheService;
-        _mqService = mqService;
     }
 
     public async Task<GetOrderDto> Handle(CancelOrderCommand request, CancellationToken cancellationToken)
     {
+
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) 
+            || !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
+        {
+            throw new ForbiddenException();
+        }
+
         var orderId = Guid.Parse(request.OrderId);
         var order = await _orders.AsAsyncRead().SingleOrDefaultAsync(e => e.OrderId == orderId, cancellationToken);
+
         if (order is null)
         {
             throw new NotFoundException(request);
         }
 
-        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
-        {
-            throw new ForbiddenException();
-        }
+        
         order.OrderStatusId = 4;
 
         _mapper.Map(request, order);

@@ -3,7 +3,9 @@ using Core.Application.Abstractions.Persistence.Repository.Read;
 using Core.Application.BaseRealizations;
 using Core.Application.DTOs;
 using Core.Auth.Application.Abstractions.Service;
+using Core.Auth.Application.Exceptions;
 using Core.Products.Domain;
+using Core.Users.Domain.Enums;
 using Products.Application.Caches;
 using Products.Application.DTOs;
 
@@ -30,6 +32,11 @@ public class GetProductsQueryHandler : BaseCashedForUserQuery<GetProductsQuery, 
 
     public override async Task<BaseListDto<GetProductDto>> SentQueryAsync(GetProductsQuery request, CancellationToken cancellationToken)
     {
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
+        {
+            throw new ForbiddenException();
+        }
+
         var query = _products.AsQueryable();
 
         if (request.Offset.HasValue)

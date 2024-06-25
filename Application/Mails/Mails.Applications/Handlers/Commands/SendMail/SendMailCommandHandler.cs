@@ -1,4 +1,6 @@
-using AutoMapper;
+using Core.Auth.Application.Abstractions.Service;
+using Core.Auth.Application.Exceptions;
+using Core.Users.Domain.Enums;
 using MailKit.Net.Smtp;
 using Mails.Application.Caches;
 using Mails.Application.DTOs;
@@ -10,18 +12,26 @@ namespace Mails.Application.Handlers.Commands.SendMail;
 internal class SendMailCommandHandler : IRequestHandler<SendMailCommand, GetMailDto>
 {
 
-    private readonly IMapper _mapper;
 
     private readonly ICleanMailsCacheService _cleanMailsCacheService;
 
-    public SendMailCommandHandler(IMapper mapper, ICleanMailsCacheService cleanMailsCacheService)
+    private readonly ICurrentUserService _currentUserService;
+
+    public SendMailCommandHandler(
+        ICurrentUserService currentUserService,
+        ICleanMailsCacheService cleanMailsCacheService)
     {
-        _mapper = mapper;
+        _currentUserService = currentUserService;
         _cleanMailsCacheService = cleanMailsCacheService;
     }
 
     public async Task<GetMailDto> Handle(SendMailCommand request, CancellationToken cancellationToken)
     {
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
+        {
+            throw new ForbiddenException();
+        }
+
         var message = new MimeMessage();
 
         message.From.Add(new MailboxAddress("MailService", request.SenderMailAddress));

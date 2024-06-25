@@ -41,6 +41,11 @@ internal class UpdateOrderStatusCommandHandler : IRequestHandler<UpdateOrderStat
 
     public async Task<GetOrderDto> Handle(UpdateOrderStatusCommand request, CancellationToken cancellationToken)
     {
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
+        {
+            throw new ForbiddenException();
+        }
+
         var orderId = Guid.Parse(request.OrderId);
         var order = await _orders.AsAsyncRead().SingleOrDefaultAsync(e => e.OrderId == orderId, cancellationToken);
         if (order is null)
@@ -48,16 +53,11 @@ internal class UpdateOrderStatusCommandHandler : IRequestHandler<UpdateOrderStat
             throw new NotFoundException(request);
         }
 
-        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
-        {
-            throw new ForbiddenException();
-        }
-
         _mapper.Map(request, order);
 
         if (order.OrderStatusId == 3)
         {
-            _mqService.SendMessage("addProductOnOrderCompleate", JsonSerializer.Serialize(request.OrderId));
+            _mqService.SendMessage("addProductOnOrderComplete", JsonSerializer.Serialize(request.OrderId));
         }
 
         order = await _orders.UpdateAsync(order, cancellationToken);

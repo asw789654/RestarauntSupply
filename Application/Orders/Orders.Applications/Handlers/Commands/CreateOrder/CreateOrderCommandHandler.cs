@@ -40,13 +40,15 @@ internal class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, G
     public async Task<GetOrderDto> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
 
-        var userId = _currentUserService.CurrentUserId;
+        var userId = _currentUserService.CurrentUserId!.Value;
 
         if (_currentUserService.CurrentUserId != userId &&
-            !_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
+            (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) ||
+            !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client)))
         {
             throw new ForbiddenException();
         }
+
         var products = new List<Product>();
         foreach (var product in request.Products)
         {

@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Storages.Application.Handlers.Queries.GetStorage;
+namespace Storages.Application.Handlers.Queries.GetStorageWithProduct;
 
 internal class GetStorageQueryValidator : AbstractValidator<GetStorageQuery>
 {

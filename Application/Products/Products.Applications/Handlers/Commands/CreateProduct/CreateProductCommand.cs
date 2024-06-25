@@ -14,4 +14,6 @@ public class CreateProductCommand : IRequest<GetProductDto>
     public DateTime? SpoilTime { get; set; }
 
     public int StorageTypeId { get; set; }
+
+    
 }

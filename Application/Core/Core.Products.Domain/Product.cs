@@ -1,3 +1,5 @@
+using Core.Storages.Domain;
+
 namespace Core.Products.Domain;
 
 public class Product
@@ -15,5 +17,9 @@ public class Product
     public Guid? OrderId { get; set; }
 
     public DateTime? SpoilTime { get; set; }
+
+    public int? StorageId { get; set; }
+
+    public Storage? Storage { get; set; }
 
 }

@@ -31,16 +31,16 @@ internal class UpdateProductMailTimeCommandHandler : IRequestHandler<UpdateProdu
 
     public async Task<GetProductDto> Handle(UpdateProductMailTimeCommand request, CancellationToken cancellationToken)
     {
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
+        {
+            throw new ForbiddenException();
+        }
+
         var productId = Guid.Parse(request.ProductId);
         var product = await _products.AsAsyncRead().SingleOrDefaultAsync(e => e.ProductId == productId, cancellationToken);
         if (product is null)
         {
             throw new NotFoundException(request);
-        }
-
-        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
-        {
-            throw new ForbiddenException();
         }
 
         _mapper.Map(request, product);

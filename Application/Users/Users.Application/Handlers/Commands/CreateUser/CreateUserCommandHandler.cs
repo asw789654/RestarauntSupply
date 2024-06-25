@@ -1,6 +1,8 @@
 using AutoMapper;
 using Core.Application.Abstractions.Persistence.Repository.Writing;
 using Core.Application.Exceptions;
+using Core.Auth.Application.Abstractions.Service;
+using Core.Auth.Application.Exceptions;
 using Core.Auth.Application.Utils;
 using Core.Users.Domain;
 using Core.Users.Domain.Enums;
@@ -23,20 +25,29 @@ internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Get
 
     private readonly IApplicationUsersCountMemoryCache _countCache;
 
+    private readonly ICurrentUserService _currentUserService;
+
     public CreateUserCommandHandler(IBaseWriteRepository<ApplicationUser> users, IMapper mapper,
         IApplicationUsersListMemoryCache listCache,
         ILogger<CreateUserCommandHandler> logger,
-        IApplicationUsersCountMemoryCache countCache)
+        IApplicationUsersCountMemoryCache countCache,
+        ICurrentUserService currentUserService)
     {
         _users = users;
         _mapper = mapper;
         _listCache = listCache;
         _logger = logger;
         _countCache = countCache;
+        _currentUserService = currentUserService;
     }
 
     public async Task<GetUserDto> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
+        {
+            throw new ForbiddenException();
+        }
+
         var isUserExist = await _users.AsAsyncRead().AnyAsync(e => e.Login == request.Login, cancellationToken);
         if (isUserExist)
         {

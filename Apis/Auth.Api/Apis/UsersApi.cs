@@ -2,7 +2,6 @@ using Auth.Application.Dtos;
 using Auth.Application.Handlers.Queries.GetCurrentUser;
 using Core.Application.Abstractions;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Api.Apis;
 
@@ -31,7 +30,7 @@ public class UsersApi : IApi
 
         #endregion
     }
-    
+
     private static Task<GetUserDto> GetCurrentUser(IMediator mediator, CancellationToken cancellationToken)
     {
         return mediator.Send(new GetCurrentUserQuery(), cancellationToken);

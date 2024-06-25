@@ -32,16 +32,15 @@ internal class GetProductQueryHandler : BaseCashedForUserQuery<GetProductQuery, 
 
     public override async Task<GetProductDto> SentQueryAsync(GetProductQuery request, CancellationToken cancellationToken)
     {
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
+        {
+            throw new ForbiddenException();
+        }
         var productId = Guid.Parse(request.ProductId);
         var product = await _products.AsAsyncRead().SingleOrDefaultAsync(e => e.ProductId == productId, cancellationToken);
         if (product is null)
         {
             throw new NotFoundException(request);
-        }
-
-        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
-        {
-            throw new ForbiddenException();
         }
 
         return _mapper.Map<GetProductDto>(product);

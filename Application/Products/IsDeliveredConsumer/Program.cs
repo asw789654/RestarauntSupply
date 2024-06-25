@@ -23,10 +23,10 @@ public class IsDelivered
 
         channel.ExchangeDeclare(exchange: "logs", type: ExchangeType.Fanout);
 
-        var queueName = "addProductOnOrderCompleate";
+        var queueName = "addProductOnOrderComplete";
         channel.QueueBind(
             queue: queueName,
-            exchange: "addProductOnOrderCompleateExchange",
+            exchange: "addProductOnOrderCompleteExchange",
             routingKey: string.Empty);
 
         var consumer = new EventingBasicConsumer(channel);
@@ -55,7 +55,7 @@ public class IsDelivered
                 }
             }
         };
-        channel.BasicConsume(queue: "addProductOnOrderCompleate",
+        channel.BasicConsume(queue: "addProductOnOrderComplete",
                              autoAck: false,
                              consumer: consumer);
         Console.ReadLine();

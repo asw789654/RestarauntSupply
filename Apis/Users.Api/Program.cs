@@ -4,12 +4,12 @@ using Core.Application;
 using Core.Auth.Api;
 using Core.Auth.Application;
 using Core.Auth.Application.Middlewares;
+using Infrastructure.DistributedCache;
 using Infrastructure.Persistence;
 using Serilog;
 using Serilog.Events;
 using System.Reflection;
 using Users.Application;
-using Infrastructure.DistributedCache;
 
 try
 {

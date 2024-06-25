@@ -1,4 +1,3 @@
-using System.Net;
 using Core.Application.Abstractions;
 using Core.Application.DTOs;
 using MediatR;
@@ -9,9 +8,10 @@ using Orders.Application.Handlers.Commands.CancelOrder;
 using Orders.Application.Handlers.Commands.CreateOrder;
 using Orders.Application.Handlers.Commands.UpdateOrder;
 using Orders.Application.Handlers.Commands.UpdateOrderStatus;
+using Orders.Application.Handlers.Queries.GetOrder;
 using Orders.Application.Handlers.Queries.GetOrders;
 using Orders.Application.Handlers.Queries.GetOrdersCount;
-using Orders.Application.Handlers.Queries.GetOrder;
+using System.Net;
 
 namespace Orders.Api.Apis;
 
