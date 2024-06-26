@@ -54,7 +54,7 @@ public abstract class BaseCache<TItem> : IBaseCache<TItem>
             jsonItem,
             new DistributedCacheEntryOptions
             {
-                AbsoluteExpiration = new DateTimeOffset(DateTime.Now, new TimeSpan(0, 0, AbsoluteExpiration, 0)),
+                //AbsoluteExpiration = new DateTimeOffset(DateTime.Now, new TimeSpan(0, 0, AbsoluteExpiration, 0)),
                 SlidingExpiration = TimeSpan.FromMinutes(SlidingExpiration)
             });
     }

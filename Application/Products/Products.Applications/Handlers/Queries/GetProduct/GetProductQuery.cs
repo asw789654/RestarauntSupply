@@ -7,5 +7,5 @@ namespace Products.Application.Handlers.Queries.GetProduct;
 public class GetProductQuery : IRequest<DTOs.GetProductDto>
 {
     public string ProductId { get; init; } = default!;
-    public string Id { get; internal set; }
+    public string Id { get; internal set; } = default!;
 }

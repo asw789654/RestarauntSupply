@@ -30,6 +30,6 @@ internal class GetUsersCountQueryHandler : BaseCashedQuery<GetUsersCountQuery, i
             throw new ForbiddenException();
         }
 
-        return await _users.AsAsyncRead().CountAsync(ListWhere.Where(request), cancellationToken);
+        return await _users.AsAsyncRead().CountAsync(ListUserWhere.Where(request), cancellationToken);
     }
 }

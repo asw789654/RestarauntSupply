@@ -37,7 +37,7 @@ internal class GetUsersQueryHandler : BaseCashedQuery<GetUsersQuery, BaseListDto
             throw new ForbiddenException();
         }
 
-        var query = _users.AsQueryable().Where(ListWhere.Where(request));
+        var query = _users.AsQueryable().Where(ListUserWhere.Where(request));
 
         if (request.Offset.HasValue)
         {

@@ -10,4 +10,10 @@ internal static class ListProductWhere
         var freeText = filter.FreeText?.Trim();
         return e => freeText == null || e.Name.Contains(freeText);
     }
+    public static Expression<Func<Product, bool>> WhereForClient(ListProductFilter filter)
+    {
+        var freeText = filter.FreeText?.Trim();
+        return e => e.IsDelivered == true && 
+        (freeText == null || e.Name.Contains(freeText));
+    }
 }

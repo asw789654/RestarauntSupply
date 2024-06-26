@@ -35,7 +35,7 @@ internal class SpendProductCommandHandler : IRequestHandler<SpendProductCommand,
 
     public async Task<GetProductDto> Handle(SpendProductCommand request, CancellationToken cancellationToken)
     {
-        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) ||
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) &&
             !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
         {
             throw new ForbiddenException();

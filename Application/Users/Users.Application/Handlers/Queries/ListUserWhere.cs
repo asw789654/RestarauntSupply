@@ -3,7 +3,7 @@ using Core.Users.Domain;
 
 namespace Users.Application.Handlers.Queries;
 
-internal static class ListWhere
+internal static class ListUserWhere
 {
     public static Expression<Func<ApplicationUser, bool>> Where(ListUserFilter filter)
     {

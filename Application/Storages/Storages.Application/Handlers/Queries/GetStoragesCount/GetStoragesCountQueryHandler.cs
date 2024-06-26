@@ -25,7 +25,7 @@ internal class GetStoragesCountQueryHandler : BaseCashedForUserQuery<GetStorages
 
     public override async Task<int> SentQueryAsync(GetStoragesCountQuery request, CancellationToken cancellationToken)
     {
-        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) ||
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) &&
             !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
         {
             throw new ForbiddenException();

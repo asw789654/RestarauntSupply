@@ -13,13 +13,13 @@ namespace Users.Application.Handlers.Commands.UpdateUserPassword;
 internal class UpdateUserPasswordCommandHandler : IRequestHandler<UpdateUserPasswordCommand>
 {
     private readonly IBaseWriteRepository<ApplicationUser> _users;
-    
+
     private readonly ICurrentUserService _currentUserService;
-    
+
     private readonly ILogger<UpdateUserPasswordCommandHandler> _logger;
 
     public UpdateUserPasswordCommandHandler(
-        IBaseWriteRepository<ApplicationUser> users, 
+        IBaseWriteRepository<ApplicationUser> users,
         ICurrentUserService currentUserService,
         ILogger<UpdateUserPasswordCommandHandler> logger)
     {
@@ -27,19 +27,24 @@ internal class UpdateUserPasswordCommandHandler : IRequestHandler<UpdateUserPass
         _currentUserService = currentUserService;
         _logger = logger;
     }
-    
+
     public async Task Handle(UpdateUserPasswordCommand request, CancellationToken cancellationToken)
     {
-
-        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin)||
-            !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
+        var userId = Guid.Parse(request.UserId);
+        if ((!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin)) &&
+            (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Client)))
         {
             throw new ForbiddenException();
         }
-        var userId = Guid.Parse(request.UserId);
+
+        if (_currentUserService.CurrentUserId != userId && !_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
+        {
+            throw new ForbiddenException();
+        }
+
         var user = await _users.AsAsyncRead()
             .SingleOrDefaultAsync(u => u.ApplicationUserId == userId, cancellationToken);
-        
+
         if (user is null)
         {
             throw new NotFoundException(request);
@@ -49,7 +54,7 @@ internal class UpdateUserPasswordCommandHandler : IRequestHandler<UpdateUserPass
         user.PasswordHash = newPasswordHash;
         user.UpdatedDate = DateTime.UtcNow;
         await _users.UpdateAsync(user, cancellationToken);
-        
+
         _logger.LogWarning($"User password for {user.ApplicationUserId.ToString()} updated by {_currentUserService.CurrentUserId.ToString()}");
     }
 }

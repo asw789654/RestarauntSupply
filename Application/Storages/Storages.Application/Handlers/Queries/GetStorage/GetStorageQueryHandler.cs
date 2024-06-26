@@ -29,7 +29,7 @@ internal class GetStorageQueryHandler : BaseCashedForUserQuery<GetStorageQuery, 
 
     public override async Task<GetStorageDto> SentQueryAsync(GetStorageQuery request, CancellationToken cancellationToken)
     {
-        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) ||
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) &&
             !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
         {
             throw new ForbiddenException();

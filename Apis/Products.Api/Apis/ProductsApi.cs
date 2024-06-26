@@ -171,7 +171,6 @@ public class ProductsApi : IApi
             Name = payload.Name,
             SpoilTime = payload.SpoilTime,
             Volume = payload.Volume,
-            StorageTypeId = payload.StorageTypeId
         };
         return mediator.Send(command, cancellationToken);
     }

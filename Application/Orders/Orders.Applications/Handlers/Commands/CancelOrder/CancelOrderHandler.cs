@@ -39,7 +39,7 @@ internal class CancelOrderCommandHandler : IRequestHandler<CancelOrderCommand, G
     {
 
         if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) 
-            || !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
+            && !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
         {
             throw new ForbiddenException();
         }

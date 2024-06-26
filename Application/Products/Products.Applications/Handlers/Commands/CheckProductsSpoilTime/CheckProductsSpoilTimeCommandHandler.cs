@@ -41,7 +41,7 @@ internal class CheckProductsSpoilTimeCommandHandler : IRequestHandler<CheckProdu
 
     public async Task<BaseListDto<GetProductDto>> Handle(CheckProductsSpoilTimeCommand request, CancellationToken cancellationToken)
     {
-        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) ||
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) &&
             !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
         {
             throw new ForbiddenException();

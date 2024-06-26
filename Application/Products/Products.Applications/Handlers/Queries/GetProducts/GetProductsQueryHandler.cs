@@ -32,12 +32,20 @@ public class GetProductsQueryHandler : BaseCashedForUserQuery<GetProductsQuery, 
 
     public override async Task<BaseListDto<GetProductDto>> SentQueryAsync(GetProductsQuery request, CancellationToken cancellationToken)
     {
-        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin))
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) &&
+            !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
         {
             throw new ForbiddenException();
         }
 
         var query = _products.AsQueryable();
+
+        if (_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
+        {
+            query = query.Where(ListProductWhere.WhereForClient(request));
+        }
+
+
 
         if (request.Offset.HasValue)
         {
@@ -48,6 +56,8 @@ public class GetProductsQueryHandler : BaseCashedForUserQuery<GetProductsQuery, 
         {
             query = query.Take(request.Limit.Value);
         }
+
+
 
         query = query.Where(ListProductWhere.WhereForAll(request));
 

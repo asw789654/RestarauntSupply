@@ -32,7 +32,7 @@ public class GetOrdersQueryHandler : BaseCashedForUserQuery<GetOrdersQuery, Base
 
     public override async Task<BaseListDto<GetOrderDto>> SentQueryAsync(GetOrdersQuery request, CancellationToken cancellationToken)
     {
-        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) ||
+        if (!_currentUserService.UserInRole(ApplicationUserRolesEnum.Admin) &&
             !_currentUserService.UserInRole(ApplicationUserRolesEnum.Client))
         {
             throw new ForbiddenException();
