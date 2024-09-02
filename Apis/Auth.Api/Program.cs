@@ -57,7 +57,8 @@ try
             })
         .UseAuthentication()
         .UseAuthorization()
-        .UseHttpsRedirection();
+        .UseHttpsRedirection()
+        .UseCors();
 
     app.Run();
 }

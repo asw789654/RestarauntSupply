@@ -1,5 +1,6 @@
 using AutoMapper;
 using Core.Application.Abstractions.Persistence.Repository.Writing;
+using Core.Application.Exceptions;
 using Core.Auth.Application.Abstractions.Service;
 using Core.Auth.Application.Exceptions;
 using Core.Products.Domain;
@@ -52,6 +53,10 @@ internal class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, G
         var products = new List<Product>();
         foreach (var product in request.Products)
         {
+            if (product.Volume < 0)
+            {
+                throw new BadOperationException($"{product.Name} wrong value {product.Volume}");
+            }
             products.Add(new Product()
             {
                 Name = product.Name,
